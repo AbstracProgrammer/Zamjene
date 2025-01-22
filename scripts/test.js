@@ -12068,3 +12068,6 @@ for (let i = 0; i < json.length; i++) {
  */
 
 console.log(teachers);
+document
+  .querySelector("#autojukebox")
+  ?.addEventListener("click", () => (window.location.href = "../index.html"));

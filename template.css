@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  background-color: #a3006d;
+  height: 8vh;
+}
+
+#skola-na-dlanu {
+  position: absolute;
+  left: 0.5vw;
+  height: 3.1em;
+  cursor: pointer;
+}
+
+.default-font {
+  font-family: "Open Sans", sans-serif;
+}
+
+.title {
+  font-size: 3.1em;
+  font-family: "Audiowide", cursive;
+  margin: 0.1em;
+  color: white;
+}
+
+.main {
+  position: relative;
+  height: 92vh;
+  width: 100vw;
+}
