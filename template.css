@@ -38,3 +38,16 @@ header {
   height: 92vh;
   width: 100vw;
 }
+
+.button {
+  border-radius: 1em;
+  border: 2px solid;
+  transition: 0.5s;
+  cursor: pointer;
+  padding: 0.5em;
+  background-color: white;
+}
+
+.button:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 11px;
+}

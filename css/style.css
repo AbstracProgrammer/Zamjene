@@ -1,9 +1,91 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.7rem;
+  text-align: center;
+}
+
 .container {
   height: 100%;
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.main {
+.teacher {
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.teacher-selected {
+  background-color: rgba(109, 109, 109, 0.3);
+}
+
+.teacher:hover {
+  background-color: rgba(14, 127, 215, 0.3);
+  transition: 0.5s;
+}
+
+.choosing-list {
   display: flex;
-  justify-content: center;
+  align-items: center;
+}
+
+.list-teachers {
+  list-style: none;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  font-size: 1.2rem;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.left-side > .choosing-list {
+  justify-content: flex-start;
+}
+
+.right-side > .choosing-list {
+  justify-content: flex-end;
+}
+.transfer {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.transfer:hover {
+  background-color: rgba(109, 109, 109, 0.3);
+}
+
+.choose-teacher {
+  height: 75%;
+  display: flex;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1;
+  align-items: center;
+}
+
+.button {
+  font-size: 1.35rem;
+  min-height: fit-content;
+}
+
+.discard-button {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+
+.save-button {
+  background-color: rgba(172, 255, 47, 0.8);
 }
