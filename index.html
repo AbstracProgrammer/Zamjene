@@ -16,7 +16,7 @@
     <!--Font import end-->
     <link rel="stylesheet" href="template.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script src="scripts/test.js" defer></script>
+    <script src="scripts/loadSchedule.js" defer></script>
   </head>
 
   <body>
@@ -36,43 +36,44 @@
         <div class="container left-side">
           <h2 class="default-font">Neće izostati</h2>
 
-          <div class="choosing-list">
-            <ul class="present-teachers default-font list-teachers">
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-            </ul>
-            <span class="default-font transfer">></span>
-          </div>
+          <input type="text" id="left-input" class="teacher-input" />
+          <ul class="present-teachers default-font list-teachers">
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+          </ul>
+        </div>
+
+        <div class="transfer-div">
+          <span class="transfer default-font" id="transfer-right">></span>
+          <span class="transfer default-font" id="transfer-left"><</span>
         </div>
 
         <div class="container right-side">
           <h2 class="default-font">Izostat će</h2>
 
-          <div class="choosing-list">
-            <span class="default-font transfer"><</span>
-            <ul class="present-teachers default-font list-teachers">
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-              <li class="teacher">testtesttestestests</li>
-            </ul>
-          </div>
+          <input type="text" id="right-input" class="teacher-input" />
+          <ul class="present-teachers default-font list-teachers">
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+            <li class="teacher">testtesttestestests</li>
+          </ul>
         </div>
       </div>
 
