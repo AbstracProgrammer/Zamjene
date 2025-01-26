@@ -1,5 +1,5 @@
 async function retrieveTeacherNames(pathToJson) {
-  const response = await fetch("raspored.json");
+  const response = await fetch(pathToJson);
   const json = await response.json();
 
   let teachers = [];
@@ -11,19 +11,29 @@ async function retrieveTeacherNames(pathToJson) {
     }
     teachers.push(indexTeacher);
   }
+
+  return teachers;
 }
 
-function populateHtmlList(teacherNames) {
+function createListItem(name) {
+  const listItem = document.createElement("li");
+  listItem.classList.add("teacher");
+  listItem.textContent = name;
+  return listItem;
+}
+
+async function populateHtmlList() {
   const presentTeachers = document.querySelector(".present-teachers");
+  const teacherNames = await retrieveTeacherNames("raspored.json");
+  console.log(teacherNames);
+  for (let i = 0; i < teacherNames.length; i++) {
+    const teacherName = teacherNames[i];
+    const listElement = createListItem(teacherName);
+    presentTeachers?.appendChild(listElement);
+    listElement.addEventListener("click", () => {
+      markAsSelected(listElement);
+    });
+  }
 }
 
-retrieveTeacherNames("raspored.json");
-
-/**
- * vjv za zamjene bih dodao novi ključ
- * {"Zamjena": true}
- */
-
-document
-  .querySelector("#autojukebox")
-  ?.addEventListener("click", () => (window.location.href = "../index.html"));
+populateHtmlList();
