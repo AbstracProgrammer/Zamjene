@@ -12,7 +12,7 @@ async function retrieveTeacherNames(pathToJson) {
     teachers.push(indexTeacher);
   }
 
-  return teachers;
+  return teachers.sort(new Intl.Collator("hr").compare);
 }
 
 function createListItem(name) {

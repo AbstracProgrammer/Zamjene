@@ -1,6 +1,11 @@
 /**
  * vjv za zamjene bih dodao novi ključ
  * {"Zamjena": true}
+ *
+ * za ovo trazanje nekog specificnog imena
+ * prvo napraviti jako opsirno da mogu i za druge stvari
+ * drugo igrati se s hidden atributom
+ * trece treba raditi na foru da provjerim ako se podudara da maknem hidden, a ostalo da stavim
  */
 
 document
