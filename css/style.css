@@ -34,12 +34,12 @@ h2 {
 
 .teacher-selected {
   transition: 0.5s;
-  background-color: rgba(109, 109, 109, 0.3);
+  background-color: rgba(14, 127, 215, 0.3);
 }
 
-.teacher:hover {
-  background-color: rgba(14, 127, 215, 0.3);
+.teacher:not(.teacher-selected):hover {
   transition: 0.5s;
+  background-color: rgba(109, 109, 109, 0.3);
 }
 
 .choosing-list {

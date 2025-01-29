@@ -28,3 +28,17 @@ function addClickListener(liElement) {
     });
   }
 }
+
+document.querySelector("#left-input").addEventListener("input", (e) => {
+  displaySearchResults(
+    e.target.value,
+    document.querySelectorAll(".present-teachers > *")
+  );
+});
+
+document.querySelector("#right-input").addEventListener("input", (e) => {
+  displaySearchResults(
+    e.target.value,
+    document.querySelectorAll(".absent-teachers > *")
+  );
+});
