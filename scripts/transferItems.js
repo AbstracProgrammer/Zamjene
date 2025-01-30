@@ -1,4 +1,4 @@
-function transferItems(destination, selectedTeachersList) {
+export function transferItems(destination, selectedTeachersList) {
   for (let i = 0; i < selectedTeachersList.length; i++) {
     const teacherSelected = selectedTeachersList[i];
     destination.appendChild(teacherSelected);
@@ -6,6 +6,5 @@ function transferItems(destination, selectedTeachersList) {
     if (teacherSelected.hidden == true) {
       teacherSelected.hidden = false;
     }
-    //nekako to na kraju izvuci
   }
 }

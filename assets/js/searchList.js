@@ -6,7 +6,7 @@ function makeItemVisible(element) {
   element.hidden = false;
 }
 
-function displaySearchResults(query, elementList) {
+export function displaySearchResults(query, elementList) {
   for (let i = 0; i < elementList.length; i++) {
     const element = elementList[i];
     const lowercaseName = element.textContent.toLowerCase();

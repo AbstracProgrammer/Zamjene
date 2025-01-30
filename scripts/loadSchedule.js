@@ -22,6 +22,14 @@ function createListItem(name) {
   return listItem;
 }
 
+function markAsSelected(element) {
+  if (element.classList.contains("teacher-selected")) {
+    element.classList.remove("teacher-selected");
+    return;
+  }
+  element.classList.add("teacher-selected");
+}
+
 async function populateHtmlList() {
   const presentTeachersElement = document.querySelector(".present-teachers");
   const teacherNames = await retrieveTeacherNames("raspored.json");

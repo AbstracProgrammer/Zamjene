@@ -8,26 +8,12 @@
  * trece treba raditi na foru da provjerim ako se podudara da maknem hidden, a ostalo da stavim
  */
 
+import { displaySearchResults } from "../assets/js/searchList.js";
+import { transferItems } from "./transferItems.js";
+
 document
   .querySelector("#autojukebox")
   ?.addEventListener("click", () => (window.location.href = ""));
-
-function markAsSelected(element) {
-  if (element.classList.contains("teacher-selected")) {
-    element.classList.remove("teacher-selected");
-    return;
-  }
-  element.classList.add("teacher-selected");
-}
-
-function addClickListener(liElement) {
-  for (let i = 0; i < liElement.length; i++) {
-    const nameLiHtml = liElement[i];
-    nameLiHtml.addEventListener("click", () => {
-      markAsSelected(nameLiHtml);
-    });
-  }
-}
 
 document.querySelector("#left-input").addEventListener("input", (e) => {
   displaySearchResults(
