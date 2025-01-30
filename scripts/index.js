@@ -64,5 +64,7 @@ document.querySelector("#discard")?.addEventListener("click", () => {
   const absentTeachers = document.querySelector(".absent-teachers");
   presentTeachers?.replaceChildren();
   absentTeachers?.replaceChildren();
+  document.querySelector("#right-input").value = "";
+  document.querySelector("#left-input").value = "";
   populateHtmlList();
 });
