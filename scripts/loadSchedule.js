@@ -23,13 +23,12 @@ function createListItem(name) {
 }
 
 async function populateHtmlList() {
-  const presentTeachers = document.querySelector(".present-teachers");
+  const presentTeachersElement = document.querySelector(".present-teachers");
   const teacherNames = await retrieveTeacherNames("raspored.json");
-  console.log(teacherNames);
   for (let i = 0; i < teacherNames.length; i++) {
     const teacherName = teacherNames[i];
     const listElement = createListItem(teacherName);
-    presentTeachers?.appendChild(listElement);
+    presentTeachersElement?.appendChild(listElement);
     listElement.addEventListener("click", () => {
       markAsSelected(listElement);
     });

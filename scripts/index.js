@@ -42,3 +42,19 @@ document.querySelector("#right-input").addEventListener("input", (e) => {
     document.querySelectorAll(".absent-teachers > *")
   );
 });
+
+document.querySelector("#transfer-right")?.addEventListener("click", () => {
+  const absentTeachers = document.querySelector(".absent-teachers");
+  const selectedPresentTeachers = document.querySelectorAll(
+    ".present-teachers > .teacher-selected"
+  );
+  transferItems(absentTeachers, selectedPresentTeachers);
+});
+
+document.querySelector("#transfer-left")?.addEventListener("click", () => {
+  const presentTeachers = document.querySelector(".present-teachers");
+  const selectedAbsentTeachers = document.querySelectorAll(
+    ".absent-teachers > .teacher-selected"
+  );
+  transferItems(presentTeachers, selectedAbsentTeachers);
+});
