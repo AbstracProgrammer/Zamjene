@@ -52,9 +52,9 @@ document.querySelector("#transfer-right")?.addEventListener("click", () => {
 });
 
 document.querySelector("#transfer-left")?.addEventListener("click", () => {
-  const absentTeachers = document.querySelector(".absent-teachers");
-  const selectedPresentTeachers = document.querySelectorAll(
-    ".present-teachers > .teacher-selected"
+  const presentTeachers = document.querySelector(".present-teachers");
+  const selectedAbsentTeachers = document.querySelectorAll(
+    ".absent-teachers > .teacher-selected"
   );
   transferItems(presentTeachers, selectedAbsentTeachers);
 });
