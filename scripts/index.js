@@ -10,7 +10,7 @@
 
 document
   .querySelector("#autojukebox")
-  ?.addEventListener("click", () => (window.location.href = "../index.html"));
+  ?.addEventListener("click", () => (window.location.href = ""));
 
 function markAsSelected(element) {
   if (element.classList.contains("teacher-selected")) {
@@ -52,9 +52,17 @@ document.querySelector("#transfer-right")?.addEventListener("click", () => {
 });
 
 document.querySelector("#transfer-left")?.addEventListener("click", () => {
-  const presentTeachers = document.querySelector(".present-teachers");
-  const selectedAbsentTeachers = document.querySelectorAll(
-    ".absent-teachers > .teacher-selected"
+  const absentTeachers = document.querySelector(".absent-teachers");
+  const selectedPresentTeachers = document.querySelectorAll(
+    ".present-teachers > .teacher-selected"
   );
   transferItems(presentTeachers, selectedAbsentTeachers);
+});
+
+document.querySelector("#discard")?.addEventListener("click", () => {
+  const presentTeachers = document.querySelector(".present-teachers");
+  const absentTeachers = document.querySelector(".absent-teachers");
+  presentTeachers?.replaceChildren();
+  absentTeachers?.replaceChildren();
+  populateHtmlList();
 });
