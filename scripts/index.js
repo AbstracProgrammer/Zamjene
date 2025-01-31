@@ -54,3 +54,30 @@ document.querySelector("#discard")?.addEventListener("click", () => {
   document.querySelector("#left-input").value = "";
   populateHtmlList();
 });
+
+document.querySelector("#save")?.addEventListener("click", () => {
+  const absentTeachers = [];
+  const selectedAbsentTeachers = document.querySelectorAll(
+    ".absent-teachers > .teacher"
+  );
+
+  if (selectedAbsentTeachers.length == 0) {
+    window.alert("Molimo izaberite profesore/ice koje će izostati");
+    return;
+  }
+
+  for (let i = 0; i < selectedAbsentTeachers.length; i++) {
+    const element = selectedAbsentTeachers[i];
+    absentTeachers.push(element.textContent);
+  }
+
+  const absentTeacherData = JSON.stringify(absentTeachers);
+  const dataSafeBase64Encode = encodeURIComponent(absentTeacherData);
+
+  const url =
+    window.location.href +
+    "raspored/raspored.html?absent=" +
+    dataSafeBase64Encode;
+
+  window.open(url, "_self");
+});
