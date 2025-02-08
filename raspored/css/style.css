@@ -1,0 +1,54 @@
+.main {
+  display: flex;
+  flex-direction: column;
+}
+h1 {
+  text-align: center;
+}
+
+.save-status {
+  text-align: center;
+}
+.saved {
+  color: green;
+}
+.not-saved {
+  color: red;
+}
+.cycle-teachers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.75rem;
+}
+
+.name {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.cycle {
+  cursor: pointer;
+}
+
+.cycle:hover {
+  background-color: rgba(109, 109, 109, 0.3);
+}
+
+th,
+td {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+}
+
+.table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

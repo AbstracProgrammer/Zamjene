@@ -15,6 +15,7 @@
     />
     <!--Font import end-->
     <link rel="stylesheet" href="../assets/css/template.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
@@ -23,13 +24,35 @@
     </header>
 
     <div class="main">
+      <h1 class="default-font">
+        Odaberite sate na koje će profesor/ica izostati
+      </h1>
       <div class="cycle-teachers">
-        <span class="cycle"><</span>
-        <h1 class="name"></h1>
-        <span class="cycle">></span>
+        <span class="cycle default-font"><</span>
+        <span class="name default-font">placeholder</span>
+        <span class="cycle default-font">></span>
       </div>
-      <h2 class="save-satus"></h2>
-      <div class="table"></div>
+      <h2 class="save-status not-saved default-font">Nije spremljeno</h2>
+      <div class="table">
+        <table class="schedule">
+          <tr class="main-row">
+            <th>Sat</th>
+            <th>Ponedjeljak</th>
+            <th>Utorak</th>
+            <th>Srijeda</th>
+            <th>Četvrtak</th>
+            <th>Petak</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>a</td>
+            <td>d</td>
+            <td>f</td>
+            <td>f</td>
+            <td>g</td>
+          </tr>
+        </table>
+      </div>
       <div class="action-buttons"></div>
       <div class="completion-status"></div>
     </div>
