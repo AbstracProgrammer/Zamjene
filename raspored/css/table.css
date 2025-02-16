@@ -1,0 +1,28 @@
+th,
+td {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+}
+
+.select-all-table {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+.select-all-table:hover {
+  background-color: rgba(109, 109, 109, 0.3);
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

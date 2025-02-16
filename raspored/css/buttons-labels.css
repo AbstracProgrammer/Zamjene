@@ -1,0 +1,55 @@
+.button {
+  font-size: 1.2rem;
+}
+.completion-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.continue-button {
+  background-color: aqua;
+}
+
+.text {
+  font-size: 1.75rem;
+  font-weight: bold;
+  padding-right: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.discard-button {
+  background-color: rgba(255, 0, 0, 0.8);
+}
+
+.save-button {
+  background-color: rgba(172, 255, 47, 0.8);
+}
+
+.cycle-teachers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.75rem;
+}
+
+.name {
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+.forbidden-cycle {
+  cursor: not-allowed;
+}
+
+.cycle:not(.forbidden-cycle) {
+  cursor: pointer;
+}
+
+.cycle:hover:not(.forbidden-cycle) {
+  background-color: rgba(109, 109, 109, 0.3);
+}
