@@ -21,3 +21,9 @@ export function displaySearchResults(query, elementList) {
     makeItemHidden(element);
   }
 }
+
+export async function fetchJSON() {
+  let JSON = await fetch("../raspored.json");
+  JSON = await JSON.json();
+  return JSON;
+}
