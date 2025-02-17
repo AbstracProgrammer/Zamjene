@@ -26,3 +26,13 @@ th {
   border: 1px solid black;
   border-collapse: collapse;
 }
+
+.selected {
+  transition: 0.5s;
+  background-color: rgba(14, 127, 215, 0.3);
+}
+
+.selectable:hover {
+  transition: 0.5s;
+  background-color: rgba(109, 109, 109, 0.3);
+}

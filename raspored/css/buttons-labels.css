@@ -40,10 +40,21 @@
 
 .name {
   padding: 0 0.5rem 0 0.5rem;
+  width: 15%;
+  text-align: center;
+  container-name: test;
+  /**
+  https://stackoverflow.com/questions/16056591/font-scaling-based-on-size-of-container
+  trebala bi biti neka fiksna duljina
+  */
 }
 
 .forbidden-cycle {
   cursor: not-allowed;
+}
+
+.cycle {
+  user-select: none;
 }
 
 .cycle:not(.forbidden-cycle) {

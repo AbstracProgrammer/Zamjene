@@ -1,17 +1,5 @@
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
-console.log(absentTeachers);
-import { fetchJSON } from "../../assets/js/searchList.js";
-
-async function filterJSON(teachers) {
-  const JSON = await fetchJSON();
-  const filteredJSON = JSON.filter((json) => filterHelper(json.Prof, teachers));
-  return filteredJSON;
-}
-
-function filterHelper(name, list) {
-  return list.includes(name);
-}
 
 function setCurrentTeacher(name) {
   const display = document.querySelector(".name");
@@ -24,9 +12,7 @@ const nextTeacherButton = document.querySelector("#right");
 
 function previousTeacher() {
   const pointer = absentTeachers.indexOf(currentTeacher);
-  if (pointer == 0) {
-    return;
-  } else if (pointer == 1) {
+  if (pointer == 1) {
     previousTeacherButton?.classList.add("forbidden-cycle");
     previousTeacherButton?.removeEventListener("click", previousTeacher);
   }
@@ -41,9 +27,7 @@ function previousTeacher() {
 
 function nextTeacher() {
   const pointer = absentTeachers.indexOf(currentTeacher);
-  if (pointer + 1 == absentTeachers.length) {
-    return;
-  } else if (pointer + 2 == absentTeachers.length) {
+  if (pointer + 2 == absentTeachers.length) {
     nextTeacherButton?.classList.add("forbidden-cycle");
     nextTeacherButton?.removeEventListener("click", nextTeacher);
   }
