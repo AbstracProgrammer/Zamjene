@@ -79,9 +79,11 @@ function generateRow(period, classesList, table) {
   table.appendChild(row);
 }
 
-function clickCellsForSpecificDay(cells, specificDayIndex) {
-  for (let index = 0; index < cells.length; index++) {
-    const row = cells[index];
+export function clickCellsForSpecificDay(e) {
+  const specificDayIndex = Number(e.currentTarget.getAttribute("day-index"));
+  const allRows = document.querySelectorAll(".schedule > tbody > tr");
+  for (let index = 0; index < allRows.length; index++) {
+    const row = allRows[index];
     const cell = row.children[specificDayIndex];
     if (cell.classList.contains("selected")) {
       continue;
@@ -92,16 +94,13 @@ function clickCellsForSpecificDay(cells, specificDayIndex) {
 
 function wholeDayAbsenceFunction() {
   const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
-  const allRows = document.querySelectorAll(".schedule > tbody > tr");
   //prvo idem s 1 jer je prvi stupac sat
   for (let i = 1; i < mainRowCells.length; i++) {
-    mainRowCells[i].addEventListener("click", () =>
-      clickCellsForSpecificDay(allRows, i)
-    );
+    mainRowCells[i].addEventListener("click", clickCellsForSpecificDay);
   }
 }
 
-function wholeWeekAbsence() {
+export function wholeWeekAbsenceFunction() {
   const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
   //prvo idem s 1 jer je prvi stupac sat
   for (let i = 1; i < mainRowCells.length; i++) {
@@ -119,5 +118,5 @@ export function generateTable(classesList) {
   }
   wholeDayAbsenceFunction();
   const wholeWeekAbsenceButton = document.querySelector(".select-all-table");
-  wholeWeekAbsenceButton?.addEventListener("click", wholeWeekAbsence);
+  wholeWeekAbsenceButton?.addEventListener("click", wholeWeekAbsenceFunction);
 }

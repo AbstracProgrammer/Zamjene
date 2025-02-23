@@ -1,4 +1,5 @@
 import { fetchJSON } from "../../assets/js/searchList.js";
+import { destroyTable } from "./destroyTable.js";
 import { filterJSON, generateTable } from "./generateTable.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -31,6 +32,8 @@ function previousTeacher() {
   }
   currentTeacher = absentTeachers[pointer - 1];
   setCurrentTeacher(currentTeacher);
+
+  destroyTable();
 }
 
 function nextTeacher() {
@@ -47,6 +50,8 @@ function nextTeacher() {
 
   currentTeacher = absentTeachers[pointer + 1];
   setCurrentTeacher(currentTeacher);
+
+  destroyTable();
 }
 
 //ODMAH generirati prvog prof
