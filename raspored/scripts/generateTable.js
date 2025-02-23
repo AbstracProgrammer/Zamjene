@@ -51,9 +51,6 @@ function prepareOrderedClassesList(period, classesList) {
 }
 
 function generateRow(period, classesList, table) {
-  //ostali su satovi, ako name samo stavi prazno
-  //dodati klasu .selectable
-  //i event listener da se može klinuti, dodati .selected
   const row = document.createElement("tr");
   const numberCell = document.createElement("td");
   numberCell.textContent = period;
@@ -93,7 +90,7 @@ function clickCellsForSpecificDay(cells, specificDayIndex) {
   }
 }
 
-function wholeDayAbstenceFunction() {
+function wholeDayAbsenceFunction() {
   const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
   const allRows = document.querySelectorAll(".schedule > tbody > tr");
   //prvo idem s 1 jer je prvi stupac sat
@@ -101,6 +98,14 @@ function wholeDayAbstenceFunction() {
     mainRowCells[i].addEventListener("click", () =>
       clickCellsForSpecificDay(allRows, i)
     );
+  }
+}
+
+function wholeWeekAbsence() {
+  const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
+  //prvo idem s 1 jer je prvi stupac sat
+  for (let i = 1; i < mainRowCells.length; i++) {
+    mainRowCells[i].click();
   }
 }
 
@@ -112,5 +117,7 @@ export function generateTable(classesList) {
   for (let i = 1; i <= findLatestClass(classesList); i++) {
     generateRow(i, classesList, table);
   }
-  wholeDayAbstenceFunction();
+  wholeDayAbsenceFunction();
+  const wholeWeekAbsenceButton = document.querySelector(".select-all-table");
+  wholeWeekAbsenceButton?.addEventListener("click", wholeWeekAbsence);
 }
