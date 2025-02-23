@@ -4,6 +4,7 @@ import { filterJSON, generateTable } from "./generateTable.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
+
 function teacherJSON(json, teacherName) {
   return json.filter((item) => {
     return item.Prof == teacherName;
@@ -15,9 +16,17 @@ function setCurrentTeacher(name) {
   display.textContent = name;
 }
 
-//gumbove za sljedeći, prijašnji prof
 const previousTeacherButton = document.querySelector("#left");
 const nextTeacherButton = document.querySelector("#right");
+
+async function generateNewTeacher(teacherName) {
+  destroyTable();
+  const startingTeacherJson = teacherJSON(
+    await filterJSON(absentTeachers),
+    teacherName
+  );
+  generateTable(startingTeacherJson);
+}
 
 function previousTeacher() {
   const pointer = absentTeachers.indexOf(currentTeacher);
@@ -33,7 +42,7 @@ function previousTeacher() {
   currentTeacher = absentTeachers[pointer - 1];
   setCurrentTeacher(currentTeacher);
 
-  destroyTable();
+  generateNewTeacher(currentTeacher);
 }
 
 function nextTeacher() {
@@ -51,7 +60,7 @@ function nextTeacher() {
   currentTeacher = absentTeachers[pointer + 1];
   setCurrentTeacher(currentTeacher);
 
-  destroyTable();
+  generateNewTeacher(currentTeacher);
 }
 
 //ODMAH generirati prvog prof
