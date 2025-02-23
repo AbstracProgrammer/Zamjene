@@ -65,7 +65,6 @@ async function setUpStartingScreen() {
     await filterJSON(absentTeachers),
     absentTeachers[0]
   );
-  console.log(await filterJSON(absentTeachers), startingTeacherJson);
   generateTable(startingTeacherJson);
 }
 
@@ -84,11 +83,3 @@ async function remainingJSON() {
   });
   return jsonNotInUse;
 }
-/**
- * IDEJA ZA OVE KLIKOVE
- *
- * ako kliknes npr. Ponedjeljak, on sam po sebi neće dobiti kao oznaku da je kliknut
- * nego on ce onda kliknute sve sve pomocu element.click()
- *
- * ista stvar vrijedi za cijelu tablicu
- */

@@ -1,5 +1,7 @@
 import { fetchJSON } from "../../assets/js/searchList.js";
 
+const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
+
 export async function filterJSON(teachers) {
   const JSON = await fetchJSON();
   const filteredJSON = JSON.filter((json) => filterHelper(json.Prof, teachers));
@@ -32,8 +34,7 @@ function findLatestClass(teacherClasses) {
   return latestClass;
 }
 
-async function prepareOrderedClassesList(period, classesList) {
-  const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
+function prepareOrderedClassesList(period, classesList) {
   let orderedList = [];
   let toAppend = "";
   for (let i = 0; i < schoolDays.length; i++) {
@@ -49,7 +50,7 @@ async function prepareOrderedClassesList(period, classesList) {
   return orderedList;
 }
 
-async function generateRow(period, classesList, table) {
+function generateRow(period, classesList, table) {
   //ostali su satovi, ako name samo stavi prazno
   //dodati klasu .selectable
   //i event listener da se može klinuti, dodati .selected
@@ -57,10 +58,7 @@ async function generateRow(period, classesList, table) {
   const numberCell = document.createElement("td");
   numberCell.textContent = period;
   row.appendChild(numberCell);
-  const toGenerateClasses = await prepareOrderedClassesList(
-    period,
-    classesList
-  );
+  const toGenerateClasses = prepareOrderedClassesList(period, classesList);
 
   for (let i = 0; i < 5; i++) {
     const className = toGenerateClasses[i];
@@ -73,11 +71,37 @@ async function generateRow(period, classesList, table) {
 
     classCell.classList.add("selectable");
     classCell.addEventListener("click", () => {
-      //nzm sta jos
+      if (classCell.classList.contains("selectable")) {
+        classCell.classList.replace("selectable", "selected");
+      } else {
+        classCell.classList.replace("selected", "selectable");
+      }
     });
   }
 
   table.appendChild(row);
+}
+
+function clickCellsForSpecificDay(cells, specificDayIndex) {
+  for (let index = 0; index < cells.length; index++) {
+    const row = cells[index];
+    const cell = row.children[specificDayIndex];
+    if (cell.classList.contains("selected")) {
+      continue;
+    }
+    cell.click();
+  }
+}
+
+function wholeDayAbstenceFunction() {
+  const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
+  const allRows = document.querySelectorAll(".schedule > tbody > tr");
+  //prvo idem s 1 jer je prvi stupac sat
+  for (let i = 1; i < mainRowCells.length; i++) {
+    mainRowCells[i].addEventListener("click", () =>
+      clickCellsForSpecificDay(allRows, i)
+    );
+  }
 }
 
 export function generateTable(classesList) {
@@ -88,4 +112,5 @@ export function generateTable(classesList) {
   for (let i = 1; i <= findLatestClass(classesList); i++) {
     generateRow(i, classesList, table);
   }
+  wholeDayAbstenceFunction();
 }
