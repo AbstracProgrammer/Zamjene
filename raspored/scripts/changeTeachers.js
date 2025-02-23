@@ -1,5 +1,13 @@
+import { fetchJSON } from "../../assets/js/searchList.js";
+import { filterJSON, generateTable } from "./generateTable.js";
+
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
+function teacherJSON(json, teacherName) {
+  return json.filter((item) => {
+    return item.Prof == teacherName;
+  });
+}
 
 function setCurrentTeacher(name) {
   const display = document.querySelector(".name");
@@ -42,15 +50,40 @@ function nextTeacher() {
 }
 
 //ODMAH generirati prvog prof
-setCurrentTeacher(absentTeachers[0]);
 let currentTeacher = absentTeachers[0]; //mozda ovdje export
-previousTeacherButton?.classList.add("forbidden-cycle");
-if (absentTeachers.length == 1) {
-  nextTeacherButton?.classList.add("forbidden-cycle");
-} else {
-  nextTeacherButton?.addEventListener("click", nextTeacher);
+
+async function setUpStartingScreen() {
+  setCurrentTeacher(absentTeachers[0]);
+  previousTeacherButton?.classList.add("forbidden-cycle");
+  if (absentTeachers.length == 1) {
+    nextTeacherButton?.classList.add("forbidden-cycle");
+  } else {
+    nextTeacherButton?.addEventListener("click", nextTeacher);
+  }
+
+  const startingTeacherJson = teacherJSON(
+    await filterJSON(absentTeachers),
+    absentTeachers[0]
+  );
+  console.log(await filterJSON(absentTeachers), startingTeacherJson);
+  generateTable(startingTeacherJson);
 }
 
+setUpStartingScreen();
+
+async function remainingJSON() {
+  let jsonInUse = await filterJSON(absentTeachers);
+  jsonInUse = jsonInUse.map((item) => {
+    return JSON.stringify(item);
+  });
+
+  const originalJSON = await fetchJSON();
+
+  const jsonNotInUse = originalJSON.filter((item) => {
+    return !jsonInUse.includes(JSON.stringify(item));
+  });
+  return jsonNotInUse;
+}
 /**
  * IDEJA ZA OVE KLIKOVE
  *
