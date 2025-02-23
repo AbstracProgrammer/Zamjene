@@ -11,6 +11,7 @@ td {
 }
 .select-all-table:hover {
   background-color: rgba(109, 109, 109, 0.3);
+  transition: 0.5s;
 }
 
 .table {
