@@ -19,16 +19,18 @@ function displaySavedSchdule(teacherJSON) {
   }
 }
 
-export async function checkForSavedSchedule(teacherName) {
+export async function checkForSavedSchedule(teacherName, onStart) {
   const currentTeacherJSON = await filterJSONByTeacher(teacherName);
   for (let i = 0; i < currentTeacherJSON.length; i++) {
     const json = currentTeacherJSON[i];
     if ("Zamjena" in json) {
       displaySavedSchdule(currentTeacherJSON);
+      onStart ? changeStatusMessage() : {};
       return true;
     }
   }
-  changeStatusMessage();
+
+  onStart ? {} : changeStatusMessage();
 }
 
 export function stopIfUserDidntSave() {

@@ -48,7 +48,7 @@ function previousTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
-  checkForSavedSchedule(currentTeacher);
+  checkForSavedSchedule(currentTeacher, false);
 }
 
 function nextTeacher() {
@@ -68,7 +68,7 @@ function nextTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
-  checkForSavedSchedule(currentTeacher);
+  checkForSavedSchedule(currentTeacher, false);
 }
 
 function resetJSOn() {
@@ -112,9 +112,7 @@ async function setUpStartingScreen() {
     absentTeachers[0]
   );
   generateTable(startingTeacherJson);
-  if (await checkForSavedSchedule(absentTeachers[0])) {
-    changeStatusMessage();
-  }
+  checkForSavedSchedule(absentTeachers[0], true);
 }
 
 setUpStartingScreen();
