@@ -1,7 +1,16 @@
-import { discard, prepareJSON } from "./buttonsLabels.js";
+import {
+  changeRemainingNumber,
+  changeStatusMessage,
+  discard,
+  prepareJSON,
+} from "./buttonsLabels.js";
 import { destroyTable } from "./destroyTable.js";
 import { generateTable } from "./generateTable.js";
 import { filterJSONByTeacher, specificTeacherJSON } from "./jsonHelper.js";
+import {
+  checkForSavedSchedule,
+  stopIfUserDidntSave,
+} from "./savedScheduleHandler.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
@@ -24,6 +33,7 @@ async function generateNewTeacher(teacherName) {
 }
 
 function previousTeacher() {
+  stopIfUserDidntSave();
   const pointer = absentTeachers.indexOf(currentTeacher);
   if (pointer == 1) {
     previousTeacherButton?.classList.add("forbidden-cycle");
@@ -38,9 +48,11 @@ function previousTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
+  checkForSavedSchedule(currentTeacher);
 }
 
 function nextTeacher() {
+  stopIfUserDidntSave();
   const pointer = absentTeachers.indexOf(currentTeacher);
   if (pointer + 2 == absentTeachers.length) {
     nextTeacherButton?.classList.add("forbidden-cycle");
@@ -56,6 +68,7 @@ function nextTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
+  checkForSavedSchedule(currentTeacher);
 }
 
 function resetJSOn() {
@@ -66,10 +79,13 @@ function resetJSOn() {
 
 let currentTeacher = absentTeachers[0]; //mozda ovdje export
 document.querySelector("#discard")?.addEventListener("click", discard);
+
+document.querySelector(".total").textContent = absentTeachers.length;
+
 document.querySelector("#save")?.addEventListener("click", async () => {
   const jsonToSave = await prepareJSON(absentTeachers, currentTeacher);
 
-  await fetch("../assets/server/saveJSON.php", {
+  fetch("../assets/server/saveJSON.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,9 +94,9 @@ document.querySelector("#save")?.addEventListener("click", async () => {
       json: JSON.stringify(jsonToSave),
     }),
   });
+  changeStatusMessage();
+  changeRemainingNumber(true);
 });
-
-document.querySelector(".total").textContent = absentTeachers.length;
 
 async function setUpStartingScreen() {
   setCurrentTeacher(absentTeachers[0]);
@@ -96,6 +112,9 @@ async function setUpStartingScreen() {
     absentTeachers[0]
   );
   generateTable(startingTeacherJson);
+  if (await checkForSavedSchedule(absentTeachers[0])) {
+    changeStatusMessage();
+  }
 }
 
 setUpStartingScreen();

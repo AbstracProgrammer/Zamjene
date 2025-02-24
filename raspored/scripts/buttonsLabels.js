@@ -17,7 +17,12 @@ export function changeStatusMessage() {
   }
 }
 
-export function changeRemainingNumber(remainingTextElement) {}
+export function changeRemainingNumber(addition) {
+  const remainingSchedulesText = document.querySelector(".remaining");
+  let remainingNumber = Number(remainingSchedulesText.textContent);
+  addition ? remainingNumber++ : remainingNumber--;
+  remainingSchedulesText.textContent = remainingNumber;
+}
 
 export function discard() {
   const selectedCells = document.querySelectorAll("tbody > * > .selected");
@@ -26,7 +31,7 @@ export function discard() {
   }
 }
 
-function findClassJson(cell) {
+export function findClassInfoFromCell(cell) {
   const rowOfCell = cell.parentElement;
   const period = rowOfCell.children[0].textContent;
   const dayIndex = [...rowOfCell.children].indexOf(cell);
@@ -39,8 +44,13 @@ function saveCells() {
   const savedCells = [];
   for (let i = 0; i < selectedCells.length; i++) {
     const cell = selectedCells[i];
-    const response = findClassJson(cell);
+    const response = findClassInfoFromCell(cell);
     savedCells.push(response);
+  }
+
+  if (savedCells.length == 0) {
+    alert("Molimo izaberite sat s kojeg će profesor/ica izostati");
+    throw new Error("Izaberite barem jedan sat");
   }
   return savedCells;
 }

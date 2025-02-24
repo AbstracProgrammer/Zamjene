@@ -1,6 +1,6 @@
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
 
-function checkIf0thClass(teacherClasses) {
+export function checkIf0thClass(teacherClasses) {
   for (let index = 0; index < teacherClasses.length; index++) {
     const classTime = Number(teacherClasses[index].Sat);
     if (classTime == 0) {
@@ -73,7 +73,10 @@ export function clickCellsForSpecificDay(e) {
   for (let index = 0; index < allRows.length; index++) {
     const row = allRows[index];
     const cell = row.children[specificDayIndex];
-    if (cell.classList.contains("selected")) {
+    if (
+      cell.classList.contains("selected") ||
+      !cell.classList.contains("selectable")
+    ) {
       continue;
     }
     cell.click();
