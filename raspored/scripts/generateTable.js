@@ -1,16 +1,4 @@
-import { fetchJSON } from "../../assets/js/searchList.js";
-
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
-
-export async function filterJSON(teachers) {
-  const JSON = await fetchJSON();
-  const filteredJSON = JSON.filter((json) => filterHelper(json.Prof, teachers));
-  return filteredJSON;
-}
-
-function filterHelper(name, list) {
-  return list.includes(name);
-}
 
 function checkIf0thClass(teacherClasses) {
   for (let index = 0; index < teacherClasses.length; index++) {
