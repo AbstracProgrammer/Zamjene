@@ -1,15 +1,10 @@
-import { fetchJSON } from "../../assets/js/searchList.js";
+import { discard, prepareJSON } from "./buttonsLabels.js";
 import { destroyTable } from "./destroyTable.js";
-import { filterJSON, generateTable } from "./generateTable.js";
+import { generateTable } from "./generateTable.js";
+import { filterJSONByTeacher, specificTeacherJSON } from "./jsonHelper.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
-
-function teacherJSON(json, teacherName) {
-  return json.filter((item) => {
-    return item.Prof == teacherName;
-  });
-}
 
 function setCurrentTeacher(name) {
   const display = document.querySelector(".name");
@@ -21,8 +16,8 @@ const nextTeacherButton = document.querySelector("#right");
 
 async function generateNewTeacher(teacherName) {
   destroyTable();
-  const startingTeacherJson = teacherJSON(
-    await filterJSON(absentTeachers),
+  const startingTeacherJson = specificTeacherJSON(
+    await filterJSONByTeacher(absentTeachers),
     teacherName
   );
   generateTable(startingTeacherJson);
@@ -63,8 +58,29 @@ function nextTeacher() {
   generateNewTeacher(currentTeacher);
 }
 
-//ODMAH generirati prvog prof
+function resetJSOn() {
+  fetch("../assets/server/resetJSON.php", {
+    method: "POST",
+  });
+}
+
 let currentTeacher = absentTeachers[0]; //mozda ovdje export
+document.querySelector("#discard")?.addEventListener("click", discard);
+document.querySelector("#save")?.addEventListener("click", async () => {
+  const jsonToSave = await prepareJSON(absentTeachers, currentTeacher);
+
+  await fetch("../assets/server/saveJSON.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      json: JSON.stringify(jsonToSave),
+    }),
+  });
+});
+
+document.querySelector(".total").textContent = absentTeachers.length;
 
 async function setUpStartingScreen() {
   setCurrentTeacher(absentTeachers[0]);
@@ -75,25 +91,11 @@ async function setUpStartingScreen() {
     nextTeacherButton?.addEventListener("click", nextTeacher);
   }
 
-  const startingTeacherJson = teacherJSON(
-    await filterJSON(absentTeachers),
+  const startingTeacherJson = specificTeacherJSON(
+    await filterJSONByTeacher(absentTeachers),
     absentTeachers[0]
   );
   generateTable(startingTeacherJson);
 }
 
 setUpStartingScreen();
-
-async function remainingJSON() {
-  let jsonInUse = await filterJSON(absentTeachers);
-  jsonInUse = jsonInUse.map((item) => {
-    return JSON.stringify(item);
-  });
-
-  const originalJSON = await fetchJSON();
-
-  const jsonNotInUse = originalJSON.filter((item) => {
-    return !jsonInUse.includes(JSON.stringify(item));
-  });
-  return jsonNotInUse;
-}
