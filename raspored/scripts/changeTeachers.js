@@ -71,18 +71,16 @@ function nextTeacher() {
   checkForSavedSchedule(currentTeacher, false);
 }
 
-function resetJSOn() {
-  fetch("../assets/server/resetJSON.php", {
-    method: "POST",
-  });
-}
-
 let currentTeacher = absentTeachers[0]; //mozda ovdje export
 document.querySelector("#discard")?.addEventListener("click", discard);
 
 document.querySelector(".total").textContent = absentTeachers.length;
 
 document.querySelector("#save")?.addEventListener("click", async () => {
+  const statusElement = document.querySelector(".save-status");
+  if (statusElement?.classList.contains("saved")) {
+    return;
+  }
   const jsonToSave = await prepareJSON(absentTeachers, currentTeacher);
 
   fetch("../assets/server/saveJSON.php", {
