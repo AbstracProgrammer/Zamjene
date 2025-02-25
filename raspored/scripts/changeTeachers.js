@@ -2,13 +2,14 @@ import {
   changeRemainingNumber,
   changeStatusMessage,
   discard,
+  documentSavedSchedules,
   prepareJSON,
 } from "./buttonsLabels.js";
 import { destroyTable } from "./destroyTable.js";
 import { generateTable } from "./generateTable.js";
 import { filterJSONByTeacher, specificTeacherJSON } from "./jsonHelper.js";
 import {
-  checkForSavedSchedule,
+  generateIfSavedSchedule,
   stopIfUserDidntSave,
 } from "./savedScheduleHandler.js";
 
@@ -48,7 +49,7 @@ function previousTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
-  checkForSavedSchedule(currentTeacher, false);
+  generateIfSavedSchedule(currentTeacher, false);
 }
 
 function nextTeacher() {
@@ -68,7 +69,7 @@ function nextTeacher() {
   setCurrentTeacher(currentTeacher);
 
   generateNewTeacher(currentTeacher);
-  checkForSavedSchedule(currentTeacher, false);
+  generateIfSavedSchedule(currentTeacher, false);
 }
 
 let currentTeacher = absentTeachers[0]; //mozda ovdje export
@@ -110,7 +111,8 @@ async function setUpStartingScreen() {
     absentTeachers[0]
   );
   generateTable(startingTeacherJson);
-  checkForSavedSchedule(absentTeachers[0], true);
+  generateIfSavedSchedule(absentTeachers[0], true);
+  documentSavedSchedules(absentTeachers);
 }
 
 setUpStartingScreen();

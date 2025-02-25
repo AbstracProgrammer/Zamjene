@@ -14,6 +14,7 @@ export async function remainingJSON(teacherName) {
   return jsonNotInUse;
 }
 
+//ne treba se vise koristiti jer filterJSONByTeacher radi istu stvar, samo se treba staviti jedno ime
 export function specificTeacherJSON(json, teacherName) {
   return json.filter((item) => {
     return item.Prof == teacherName;

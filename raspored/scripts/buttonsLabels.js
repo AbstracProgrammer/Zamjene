@@ -3,6 +3,7 @@ import {
   remainingJSON,
   specificTeacherJSON,
 } from "./jsonHelper.js";
+import { checkIfSavedSchedule } from "./savedScheduleHandler.js";
 
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
 
@@ -76,4 +77,14 @@ export async function prepareJSON(absentTeachers, currentTeacher) {
   ];
 
   return jsonToSave;
+}
+
+export async function documentSavedSchedules(selectedTeachers) {
+  for (let i = 0; i < selectedTeachers.length; i++) {
+    const teacher = selectedTeachers[i];
+    const teacherJSON = await filterJSONByTeacher(teacher);
+    if (checkIfSavedSchedule(teacherJSON)) {
+      changeRemainingNumber(true);
+    }
+  }
 }
