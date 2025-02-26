@@ -1,3 +1,5 @@
+import { unsaveScheduleIfChanged } from "./buttonsLabels.js";
+
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
 
 export function checkIf0thClass(teacherClasses) {
@@ -56,6 +58,10 @@ function generateRow(period, classesList, table) {
 
     classCell.classList.add("selectable");
     classCell.addEventListener("click", () => {
+      const statusElement = document.querySelector(".save-status");
+      if (statusElement?.classList.contains("saved")) {
+        unsaveScheduleIfChanged();
+      }
       if (classCell.classList.contains("selectable")) {
         classCell.classList.replace("selectable", "selected");
       } else {

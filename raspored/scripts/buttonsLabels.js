@@ -3,7 +3,10 @@ import {
   remainingJSON,
   specificTeacherJSON,
 } from "./jsonHelper.js";
-import { checkIfSavedSchedule } from "./savedScheduleHandler.js";
+import {
+  checkIfSavedSchedule,
+  displaySavedSchdule,
+} from "./savedScheduleHandler.js";
 
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
 
@@ -25,14 +28,28 @@ export function changeRemainingNumber(addition) {
   remainingSchedulesText.textContent = remainingNumber;
 }
 
-export function discard() {
+export async function discard() {
   const selectedCells = document.querySelectorAll("tbody > * > .selected");
   for (let i = 0; i < selectedCells.length; i++) {
     selectedCells[i].click();
   }
+
+  const currentTeacherName = document.querySelector(".name")?.textContent;
+  const currentTeacherJSON = await filterJSONByTeacher(currentTeacherName);
+  if (checkIfSavedSchedule(currentTeacherJSON)) {
+    displaySavedSchdule(currentTeacherJSON);
+  }
+
+  const statusElement = document.querySelector(".save-status");
+  if (statusElement?.classList.contains("saved")) {
+    return;
+  }
+  statusElement.classList.replace("not-saved", "saved");
+  statusElement.textContent = "Spremljeno";
+  changeRemainingNumber(true);
 }
 
-export function findClassInfoFromCell(cell) {
+function findClassInfoFromCell(cell) {
   const rowOfCell = cell.parentElement;
   const period = rowOfCell.children[0].textContent;
   const dayIndex = [...rowOfCell.children].indexOf(cell);
@@ -87,4 +104,9 @@ export async function documentSavedSchedules(selectedTeachers) {
       changeRemainingNumber(true);
     }
   }
+}
+
+export function unsaveScheduleIfChanged() {
+  changeStatusMessage();
+  changeRemainingNumber(false);
 }

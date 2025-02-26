@@ -116,3 +116,6 @@ async function setUpStartingScreen() {
 }
 
 setUpStartingScreen();
+//razmotrit opciju spremanja u varijablu a ne u file
+//ako se odlucim za to, trebat ce dosta mijenjati program
+//i mozda ovo poništi vratiti u normalnu a ne kao da ti vrati natrag

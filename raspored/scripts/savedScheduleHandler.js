@@ -3,7 +3,7 @@ import { checkIf0thClass } from "./generateTable.js";
 import { filterJSONByTeacher } from "./jsonHelper.js";
 const schoolDays = ["Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
 
-function displaySavedSchdule(teacherJSON) {
+export function displaySavedSchdule(teacherJSON) {
   const allRows = document.querySelectorAll(".schedule > tbody > tr");
   for (let index = 0; index < teacherJSON.length; index++) {
     const oneClass = teacherJSON[index];
@@ -15,7 +15,10 @@ function displaySavedSchdule(teacherJSON) {
     let period = Number(oneClass.Sat);
     checkIf0thClass(teacherJSON) ? {} : period--;
     const targetCell = allRows[period].children[dayRowIndex];
-    targetCell.click();
+
+    //koristim ovako "rucno" jer stvara probleme ako preko klik
+    //jer kao klik potrazumjeva korisnika, a ovo je automatski
+    targetCell.classList.replace("selectable", "selected");
   }
 }
 
