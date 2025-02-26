@@ -5,7 +5,7 @@ import {
   documentSavedSchedules,
   prepareJSON,
 } from "./buttonsLabels.js";
-import { destroyTable } from "./destroyTable.js";
+import { destroyTableAndGenerateNew } from "./destroyTable.js";
 import { generateTable } from "./generateTable.js";
 import { filterJSONByTeacher, specificTeacherJSON } from "./jsonHelper.js";
 import {
@@ -25,12 +25,8 @@ const previousTeacherButton = document.querySelector("#left");
 const nextTeacherButton = document.querySelector("#right");
 
 async function generateNewTeacher(teacherName) {
-  destroyTable();
-  const startingTeacherJson = specificTeacherJSON(
-    await filterJSONByTeacher(absentTeachers),
-    teacherName
-  );
-  generateTable(startingTeacherJson);
+  const startingTeacherJson = await filterJSONByTeacher(teacherName);
+  destroyTableAndGenerateNew(startingTeacherJson);
 }
 
 function previousTeacher() {
@@ -72,7 +68,7 @@ function nextTeacher() {
   generateIfSavedSchedule(currentTeacher, false);
 }
 
-let currentTeacher = absentTeachers[0]; //mozda ovdje export
+let currentTeacher = absentTeachers[0];
 document.querySelector("#discard")?.addEventListener("click", discard);
 
 document.querySelector(".total").textContent = absentTeachers.length;
@@ -84,6 +80,8 @@ document.querySelector("#save")?.addEventListener("click", async () => {
   }
   const jsonToSave = await prepareJSON(absentTeachers, currentTeacher);
 
+  //razmotrit opciju spremanja u varijablu a ne u file
+  //ako se odlucim za to, trebat ce dosta mijenjati program
   fetch("../assets/server/saveJSON.php", {
     method: "POST",
     headers: {
@@ -116,6 +114,5 @@ async function setUpStartingScreen() {
 }
 
 setUpStartingScreen();
-//razmotrit opciju spremanja u varijablu a ne u file
-//ako se odlucim za to, trebat ce dosta mijenjati program
-//i mozda ovo poništi vratiti u normalnu a ne kao da ti vrati natrag
+document.cookie = "teachers=" + absentTeachers.toString();
+console.log(document.cookie);

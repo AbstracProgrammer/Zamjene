@@ -57,6 +57,7 @@ function generateRow(period, classesList, table) {
     }
 
     classCell.classList.add("selectable");
+
     classCell.addEventListener("click", () => {
       const statusElement = document.querySelector(".save-status");
       if (statusElement?.classList.contains("saved")) {
@@ -75,7 +76,7 @@ function generateRow(period, classesList, table) {
 
 export function clickCellsForSpecificDay(e) {
   const specificDayIndex = Number(e.currentTarget.getAttribute("day-index"));
-  const allRows = document.querySelectorAll(".schedule > tbody > tr");
+  const allRows = document.querySelectorAll("tbody > tr");
   for (let index = 0; index < allRows.length; index++) {
     const row = allRows[index];
     const cell = row.children[specificDayIndex];
@@ -90,7 +91,7 @@ export function clickCellsForSpecificDay(e) {
 }
 
 function wholeDayAbsenceFunction() {
-  const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
+  const mainRowCells = document.querySelectorAll("th");
   //prvo idem s 1 jer je prvi stupac sat
   for (let i = 1; i < mainRowCells.length; i++) {
     mainRowCells[i].addEventListener("click", clickCellsForSpecificDay);
@@ -98,15 +99,16 @@ function wholeDayAbsenceFunction() {
 }
 
 export function wholeWeekAbsenceFunction() {
-  const mainRowCells = document.querySelectorAll(".schedule > thead > tr > th");
+  const mainRowCells = document.querySelectorAll("th");
   //prvo idem s 1 jer je prvi stupac sat
   for (let i = 1; i < mainRowCells.length; i++) {
     mainRowCells[i].click();
   }
 }
 
+const wholeWeekAbsenceButton = document.querySelector(".select-all-table");
 export function generateTable(classesList) {
-  const table = document.querySelector(".schedule > tbody");
+  const table = document.querySelector("tbody");
   if (checkIf0thClass(classesList)) {
     generateRow(0, classesList, table);
   }
@@ -114,6 +116,5 @@ export function generateTable(classesList) {
     generateRow(i, classesList, table);
   }
   wholeDayAbsenceFunction();
-  const wholeWeekAbsenceButton = document.querySelector(".select-all-table");
   wholeWeekAbsenceButton?.addEventListener("click", wholeWeekAbsenceFunction);
 }

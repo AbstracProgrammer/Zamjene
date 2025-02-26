@@ -1,5 +1,6 @@
 import {
   clickCellsForSpecificDay,
+  generateTable,
   wholeWeekAbsenceFunction,
 } from "./generateTable.js";
 
@@ -19,13 +20,14 @@ function removeWholeWeekAbsenceFunction() {
   );
 }
 
-export function destroyTable() {
+export function destroyTableAndGenerateNew(teacherJSON) {
   removeWholeDayAbsenceFunction();
   removeWholeWeekAbsenceFunction();
 
-  const table = document.querySelectorAll(".schedule > tbody > tr");
-  for (let i = 0; i < table.length; i++) {
-    const row = table[i];
-    row.remove();
-  }
+  const table = document.querySelector("tbody");
+  table.innerHTML = "";
+
+  //trebao sam napraviti ovako jer su bili inace problemi
+  //ne bi se napravilo pravilno, npr. dva puta bi se izbrisalo pa generiralo duplo
+  generateTable(teacherJSON);
 }

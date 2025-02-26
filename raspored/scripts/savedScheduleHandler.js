@@ -29,6 +29,7 @@ export function checkIfSavedSchedule(teacherJSON) {
       return true;
     }
   }
+  return false;
 }
 
 export async function generateIfSavedSchedule(teacherName, onStart) {

@@ -33,9 +33,10 @@ export async function discard() {
   for (let i = 0; i < selectedCells.length; i++) {
     selectedCells[i].click();
   }
-
   const currentTeacherName = document.querySelector(".name")?.textContent;
   const currentTeacherJSON = await filterJSONByTeacher(currentTeacherName);
+
+  //i mozda ovo poništi vratiti u normalnu a ne kao da ti vrati natrag
   if (!checkIfSavedSchedule(currentTeacherJSON)) {
     return;
   }
