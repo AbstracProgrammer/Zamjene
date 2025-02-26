@@ -95,24 +95,48 @@ document.querySelector("#save")?.addEventListener("click", async () => {
   changeRemainingNumber(true);
 });
 
-async function setUpStartingScreen() {
-  setCurrentTeacher(absentTeachers[0]);
-  previousTeacherButton?.classList.add("forbidden-cycle");
-  if (absentTeachers.length == 1) {
-    nextTeacherButton?.classList.add("forbidden-cycle");
-  } else {
-    nextTeacherButton?.addEventListener("click", nextTeacher);
-  }
+setCurrentTeacher(absentTeachers[0]);
+previousTeacherButton?.classList.add("forbidden-cycle");
+if (absentTeachers.length == 1) {
+  nextTeacherButton?.classList.add("forbidden-cycle");
+} else {
+  nextTeacherButton?.addEventListener("click", nextTeacher);
+}
 
+function checkIfUserAccidentalyExited(selectedTeachers) {
+  /**
+   * ova funkcija je namijenjena da ako korisnik izade iz programa slucajno
+   * i opet izabere iste profesore, da mu se vrate postavke od prije
+   *
+   * a ako nije izasao slucjano onda ce vjerovatno uzeti druge profesore
+   * tada resetiram json
+   */
+
+  //substring(9) zato jer ce prije doci teachers=
+  const savedTeachers = document.cookie.substring(9).split(",");
+  if (savedTeachers.length !== selectedTeachers.length) {
+    return false;
+  }
+  for (let i = 0; i < savedTeachers.length; i++) {
+    if (!selectedTeachers.includes(savedTeachers[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+async function setUpStartingScreen() {
+  if (!checkIfUserAccidentalyExited(absentTeachers)) {
+    document.cookie = "teachers=" + absentTeachers.toString();
+    resetJSON();
+  }
   const startingTeacherJson = specificTeacherJSON(
     await filterJSONByTeacher(absentTeachers),
     absentTeachers[0]
   );
+
   generateTable(startingTeacherJson);
   generateIfSavedSchedule(absentTeachers[0], true);
   documentSavedSchedules(absentTeachers);
 }
 
 setUpStartingScreen();
-document.cookie = "teachers=" + absentTeachers.toString();
-console.log(document.cookie);

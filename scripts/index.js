@@ -79,5 +79,5 @@ document.querySelector("#save")?.addEventListener("click", () => {
     "raspored/raspored.html?absent=" +
     dataSafeBase64Encode;
 
-  window.open(url, "_blank");
+  window.open(url, "_self");
 });
