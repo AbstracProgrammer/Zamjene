@@ -36,9 +36,10 @@ export async function discard() {
 
   const currentTeacherName = document.querySelector(".name")?.textContent;
   const currentTeacherJSON = await filterJSONByTeacher(currentTeacherName);
-  if (checkIfSavedSchedule(currentTeacherJSON)) {
-    displaySavedSchdule(currentTeacherJSON);
+  if (!checkIfSavedSchedule(currentTeacherJSON)) {
+    return;
   }
+  displaySavedSchdule(currentTeacherJSON);
 
   const statusElement = document.querySelector(".save-status");
   if (statusElement?.classList.contains("saved")) {
@@ -73,23 +74,31 @@ function saveCells() {
   return savedCells;
 }
 
-export async function prepareJSON(absentTeachers, currentTeacher) {
+export async function prepareJSON(absentTeacher, currentTeacher) {
   const savedCells = saveCells();
-  const currentTeacherJson = specificTeacherJSON(
-    await filterJSONByTeacher(absentTeachers),
+  const currentTeacherJSON = specificTeacherJSON(
+    await filterJSONByTeacher(absentTeacher),
     currentTeacher
   );
   for (let i = 0; i < savedCells.length; i++) {
     const classInformation = savedCells[i];
     const [period, day] = classInformation;
 
-    const indexOfSpecificClass = currentTeacherJson.findIndex((item) => {
+    const indexOfSpecificClass = currentTeacherJSON.findIndex((item) => {
       return item.Sat == period && item.Dan == day;
     });
-    currentTeacherJson[indexOfSpecificClass].Zamjena = false;
+    currentTeacherJSON[indexOfSpecificClass].Zamjena = false;
+    //ovo radim da kasnije provjerim ako neki koji je prije bio spremljen, vise nije
+    savedCells[i] = currentTeacherJSON[indexOfSpecificClass];
+  }
+  for (let index = 0; index < currentTeacherJSON.length; index++) {
+    const oneClass = currentTeacherJSON[index];
+    if (oneClass.Zamjena == false && !savedCells.includes(oneClass)) {
+      delete oneClass.Zamjena;
+    }
   }
   const jsonToSave = [
-    ...currentTeacherJson,
+    ...currentTeacherJSON,
     ...(await remainingJSON(currentTeacher)),
   ];
 
