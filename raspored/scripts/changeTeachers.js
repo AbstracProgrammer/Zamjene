@@ -3,6 +3,7 @@ import {
   changeStatusMessage,
   discard,
   documentSavedSchedules,
+  nextStep,
   prepareJSON,
 } from "./buttonsLabels.js";
 import { destroyTableAndGenerateNew } from "./destroyTable.js";
@@ -94,6 +95,7 @@ document.querySelector("#save")?.addEventListener("click", async () => {
   changeStatusMessage();
   changeRemainingNumber(true);
 });
+document.querySelector("#continue")?.addEventListener("click", nextStep);
 
 setCurrentTeacher(absentTeachers[0]);
 previousTeacherButton?.classList.add("forbidden-cycle");

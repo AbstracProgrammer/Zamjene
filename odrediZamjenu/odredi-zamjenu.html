@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zamjene</title>
+
+    <!--Font import begin-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!--Font import end-->
+
+    <link rel="stylesheet" href="../assets/css/template.css" />
+    <link rel="stylesheet" href="css/buttons-labels.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/substitutions.css" />
+  </head>
+  <body class="default-font">
+    <header>
+      <h1 class="title">Zamjene</h1>
+    </header>
+
+    <div class="main">
+      <h1 class="">Odredite zamjene sljedećim satima</h1>
+
+      <div class="cycle-container gap">
+        <span id="left-teacher" class="cycle"><</span>
+        <span id="teacher-name" class="name">placeholder</span>
+        <span id="right-teacher" class="cycle">></span>
+      </div>
+      <div class="cycle-container">
+        <span id="left-class" class="cycle"><</span>
+        <span id="day-period" class="name">placeholder</span>
+        <span id="right-class" class="cycle">></span>
+      </div>
+
+      <h2 class="save-status not-saved">Nije spremljeno</h2>
+
+      <div class="substitutions">
+        <div class="container">
+          <h2>Profesor/ica</h2>
+
+          <input type="text" id="teacher-input" class="element-input" />
+          <ul class="list-elements" id="teacher-list">
+            <!--koristiti klasu element za li-->
+          </ul>
+        </div>
+        <div class="container">
+          <h2>Predmet</h2>
+
+          <input type="text" id="subject-input" class="element-input" />
+          <ul class="list-elements" id="subject-list"></ul>
+        </div>
+        <div class="container">
+          <h2>Učionica</h2>
+
+          <input type="text" id="room-input" class="element-input" />
+          <ul class="list-elements" id="room-list"></ul>
+        </div>
+        <!--nesto nset-->
+      </div>
+      <div class="action-buttons gap">
+        <button class="button discard-button" id="discard">Poništi</button>
+        <button class="button save-button" id="save">Spremi</button>
+      </div>
+
+      <div class="completion-status gap">
+        <span class="text">
+          <span id="class-remaining">0</span>
+          /
+          <span id="class-total">X</span>
+          sati spremljeno</span
+        >
+      </div>
+
+      <div class="completion-status">
+        <span class="text">
+          <span id="schedule-remaining">0</span>
+          /
+          <span id="schedule-total">Y</span>
+          Profesora/ica spremljeno</span
+        >
+        <button class="button continue-button" id="continue">
+          Pregledaj raspored
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

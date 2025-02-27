@@ -1,0 +1,43 @@
+.substitutions {
+  display: flex;
+  justify-content: space-evenly;
+  height: 50%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+.element {
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.element-selected {
+  transition: 0.5s;
+  background-color: rgba(14, 127, 215, 0.3);
+}
+
+.element:not(.element-selected):hover {
+  transition: 0.5s;
+  background-color: rgba(109, 109, 109, 0.3);
+}
+
+.list-elements {
+  list-style: none;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  font-size: 1.2rem;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  width: 60%;
+}
+
+.element-input {
+  font-size: 1.2rem;
+}

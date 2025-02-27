@@ -106,6 +106,24 @@ export async function prepareJSON(absentTeacher, currentTeacher) {
   return jsonToSave;
 }
 
+export function nextStep() {
+  const remainingSchedulesText = document.querySelector(".remaining");
+  const remainingNumber = Number(remainingSchedulesText.textContent);
+  const totalSchedulesText = document.querySelector(".total");
+  const totalNumber = Number(totalSchedulesText.textContent);
+
+  if (totalNumber == remainingNumber) {
+    const url =
+      window.location.href.split("/")[0] +
+      "/../odrediZamjenu/odredi-zamjenu.html";
+    window.open(url, "_self");
+    return;
+  }
+  alert(
+    "Molimo da spremite sve rasporede prije prebacivanje na sljedeći korak"
+  );
+}
+
 export async function documentSavedSchedules(selectedTeachers) {
   for (let i = 0; i < selectedTeachers.length; i++) {
     const teacher = selectedTeachers[i];
