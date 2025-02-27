@@ -113,9 +113,11 @@ export function nextStep() {
   const totalNumber = Number(totalSchedulesText.textContent);
 
   if (totalNumber == remainingNumber) {
+    const queryString = window.location.href.split("?")[1];
     const url =
       window.location.href.split("/")[0] +
-      "/../odrediZamjenu/odredi-zamjenu.html";
+      "/../odrediZamjenu/odredi-zamjenu.html?" +
+      queryString;
     window.open(url, "_self");
     return;
   }
