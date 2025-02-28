@@ -41,3 +41,13 @@
 .element-input {
   font-size: 1.2rem;
 }
+
+.best {
+  background-color: rgba(172, 255, 47, 0.4);
+}
+.good {
+  background-color: rgba(255, 255, 0, 0.4);
+}
+.bad {
+  background-color: rgba(255, 0, 0, 0.4);
+}
