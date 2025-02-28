@@ -7,12 +7,11 @@ import {
 import { currentAbsence } from "./index.js";
 
 function markAsSelected(element) {
-  clickIfThereIsSelectedItem(element.parentElement);
-  hideIfFreeClass(element.textContent);
   if (element.classList.contains("element-selected")) {
-    element.classList.remove("element-selected");
     return;
   }
+  clickIfThereIsSelectedItem(element.parentElement);
+  hideIfFreeClass(element.textContent);
   element.classList.add("element-selected");
 }
 
@@ -20,15 +19,12 @@ function hideIfFreeClass(text) {
   const toDelete = document.querySelectorAll(".container");
   if (text == nullElement) {
     //zadnja dva moram
-    toDelete[1].style.visibility = "hidden";
-    toDelete[2].style.visibility = "hidden";
+    toDelete[1].style.display = "none";
+    toDelete[2].style.display = "none";
     return;
   }
-  //samo jednog provijeriti
-  if ((toDelete[1].style.visibility = "hidden")) {
-    toDelete[1].style.visibility = "visible";
-    toDelete[2].style.visibility = "visible";
-  }
+  toDelete[1].style.display = "flex";
+  toDelete[2].style.display = "flex";
 }
 
 function clickIfThereIsSelectedItem(parentElement) {

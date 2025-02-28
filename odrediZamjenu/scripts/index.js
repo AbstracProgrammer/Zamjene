@@ -1,3 +1,4 @@
+import { displaySearchResults } from "../../assets/js/searchList.js";
 import {
   extractSelectedClasses,
   sortClassroons,
@@ -8,6 +9,26 @@ import { fillClassroomList, fillTeachersList } from "./substitution.js";
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
 const modal = document.querySelector(".modal-window");
+modal.style.display = "block";
+
+document.querySelector("#teacher-input").addEventListener("input", (e) => {
+  displaySearchResults(
+    e.target.value,
+    document.querySelectorAll("#teacher-list > *")
+  );
+});
+document.querySelector("#subject-input").addEventListener("input", (e) => {
+  displaySearchResults(
+    e.target.value,
+    document.querySelectorAll("#subject-list > *")
+  );
+});
+document.querySelector("#room-input").addEventListener("input", (e) => {
+  displaySearchResults(
+    e.target.value,
+    document.querySelectorAll("#room-list > *")
+  );
+});
 
 export let currentTeachersAbsence,
   currentTeachersAbsenceJSON,
@@ -19,8 +40,6 @@ export let currentTeachersAbsence,
   currentIndexAbsence;
 
 async function setUpStartingScreen() {
-  modal.style.display = "block";
-
   [currentTeachersAbsence, currentTeachersAbsenceJSON] =
     await extractSelectedClasses(absentTeachers[0]);
   console.log(currentTeachersAbsence, currentTeachersAbsenceJSON);
@@ -36,8 +55,8 @@ async function setUpStartingScreen() {
   console.log(bestTeachersList, goodTeachersList, badTeachersList);
   //c su ostali, d su losi
   fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
-  modal.style.display = "none";
-
   fillClassroomList(await sortClassroons(currentTeachersAbsenceJSON[0]));
+
+  modal.style.display = "none";
 }
 setUpStartingScreen();
