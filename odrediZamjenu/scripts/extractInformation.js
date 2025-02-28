@@ -147,3 +147,33 @@ export async function sortClassroons(currentClassJSON) {
     ...classroomString.sort(),
   ];
 }
+
+export async function retrieveAllSubjects() {
+  const json = await fetchJSON();
+  const subjects = [];
+  for (let i = 0; i < json.length; i++) {
+    const jsonSubjects = json[i].Predmet;
+    if (subjects.includes(jsonSubjects) || jsonSubjects == nullElement) {
+      continue;
+    }
+    subjects.push(jsonSubjects);
+  }
+
+  return subjects.sort(new Intl.Collator("hr").compare);
+}
+
+export async function subjectsTeachersTeachesToStudentClass(
+  teacherJSON,
+  studentClass
+) {
+  const teacherTeaches = teacherJSON.filter((item) => {
+    return item.Razred == studentClass;
+  });
+  return [
+    ...new Set(
+      teacherTeaches.map((item) => {
+        return item.Predmet;
+      })
+    ),
+  ];
+}
