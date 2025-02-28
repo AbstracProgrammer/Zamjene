@@ -42,12 +42,12 @@
   font-size: 1.2rem;
 }
 
-.best {
+.best:not(.element-selected) {
   background-color: rgba(172, 255, 47, 0.4);
 }
-.good {
+.good:not(.element-selected) {
   background-color: rgba(255, 255, 0, 0.4);
 }
-.bad {
+.bad:not(.element-selected) {
   background-color: rgba(255, 0, 0, 0.4);
 }
