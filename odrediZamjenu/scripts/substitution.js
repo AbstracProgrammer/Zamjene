@@ -26,3 +26,20 @@ export function fillTeachersList(sortedTeachersLists) {
     teacherListElement?.appendChild(itemElement);
   }
 }
+
+export function fillClassroomList(classesList) {
+  const teacherListElement = document.querySelector("#room-list");
+
+  for (let i = 0; i < classesList.length; i++) {
+    const itemElement = document.createElement("li");
+    itemElement.classList.add("element");
+    const className = classesList[i];
+    if (i == 0) {
+      itemElement.classList.add("best");
+    } else {
+      itemElement.classList.add("bad");
+    }
+    itemElement.textContent = className;
+    teacherListElement?.appendChild(itemElement);
+  }
+}

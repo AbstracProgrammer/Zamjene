@@ -1,5 +1,9 @@
-import { extractSelectedClasses, sortTeachers } from "./extractInformation.js";
-import { fillTeachersList } from "./substitution.js";
+import {
+  extractSelectedClasses,
+  sortClassroons,
+  sortTeachers,
+} from "./extractInformation.js";
+import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
@@ -10,10 +14,12 @@ async function setUpStartingScreen() {
   let [a, b] = await extractSelectedClasses(absentTeachers[0]);
   console.log(a, b);
   //a i b su dan i sat
-  let [c, d, e] = await sortTeachers(b[1], absentTeachers[0]);
+  let [c, d, e] = await sortTeachers(b[0], absentTeachers[0]);
   console.log(c, d, e);
   //c su ostali, d su losi
   fillTeachersList([c, d, e]);
   modal.style.display = "none";
+
+  fillClassroomList(await sortClassroons(b[0]));
 }
 setUpStartingScreen();

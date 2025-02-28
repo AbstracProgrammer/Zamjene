@@ -108,3 +108,40 @@ function checkIfTeacherIsStranger(teacherJSON, currentClassJSON) {
 
   return isTeacherStranger == undefined;
 }
+
+export async function sortClassroons(currentClassJSON) {
+  const listOfClassrooms = [];
+  const json = await fetchJSON();
+
+  for (let i = 0; i < json.length; i++) {
+    const classroom = json[i].Prostor;
+    if (listOfClassrooms.includes(classroom)) {
+      continue;
+    }
+    listOfClassrooms.push(classroom);
+  }
+
+  const currentClassroomIndex = listOfClassrooms.indexOf(
+    currentClassJSON.Prostor
+  );
+  [listOfClassrooms[0], listOfClassrooms[currentClassroomIndex]] = [
+    listOfClassrooms[currentClassroomIndex],
+    listOfClassrooms[0],
+  ];
+
+  const bestClass = listOfClassrooms[0];
+  listOfClassrooms.shift();
+
+  const classroomString = listOfClassrooms.filter((item) => {
+    return Number.isNaN(Number(item));
+  });
+  const classroomIntegers = listOfClassrooms.filter((item) => {
+    return !classroomString.includes(item);
+  });
+
+  return [
+    bestClass,
+    ...classroomIntegers.sort((a, b) => a - b),
+    ...classroomString.sort(),
+  ];
+}
