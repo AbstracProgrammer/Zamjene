@@ -10,7 +10,7 @@ import { filterJSONByTeacher } from "../../raspored/scripts/jsonHelper.js";
  * Loš bi bio onaj koji im nije u nastavničkom vijeću ili je tada zauzet
  */
 
-const nullElement = "//";
+export const nullElement = "//";
 
 export async function extractSelectedClasses(teacherName) {
   const teacherJSON = await filterJSONByTeacher(teacherName);
@@ -90,6 +90,8 @@ export async function sortTeachers(currentClassJSON, currentTeacher) {
     }
     goodTeachers.push(teacher);
   }
+
+  badTeachers.push(nullElement);
   return [bestTeachers, goodTeachers, badTeachers];
 }
 

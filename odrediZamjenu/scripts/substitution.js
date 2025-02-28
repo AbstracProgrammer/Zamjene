@@ -1,5 +1,8 @@
+import { nullElement } from "./extractInformation.js";
+
 function markAsSelected(element) {
-  checkIfThereIsSelectedItem(element.parentElement);
+  clickIfThereIsSelectedItem(element.parentElement);
+  hideIfFreeClass(element.textContent);
   if (element.classList.contains("element-selected")) {
     element.classList.remove("element-selected");
     return;
@@ -7,7 +10,22 @@ function markAsSelected(element) {
   element.classList.add("element-selected");
 }
 
-function checkIfThereIsSelectedItem(parentElement) {
+function hideIfFreeClass(text) {
+  const toDelete = document.querySelectorAll(".container");
+  if (text == nullElement) {
+    //zadnja dva moram
+    toDelete[1].style.visibility = "hidden";
+    toDelete[2].style.visibility = "hidden";
+    return;
+  }
+  //samo jednog provijeriti
+  if ((toDelete[1].style.visibility = "hidden")) {
+    toDelete[1].style.visibility = "visible";
+    toDelete[2].style.visibility = "visible";
+  }
+}
+
+function clickIfThereIsSelectedItem(parentElement) {
   const selectedItem = parentElement.querySelector(".element-selected");
   if (selectedItem == null) {
     return;
