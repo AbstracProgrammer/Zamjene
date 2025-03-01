@@ -1,5 +1,5 @@
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
-import { extractSelectedClasses } from "./extractInformation.js";
+import { extractSelectedClasses, nullElement } from "./extractInformation.js";
 import { currentAbsenceText } from "./index.js";
 import { changeCurrentDisplay } from "./labelsButtons.js";
 
@@ -40,7 +40,6 @@ export async function displaySavedTeachers(teacherList) {
     savedTeachers.toString();
 }
 export async function loadSaved(currentJSON) {
-  console.log(currentJSON);
   if (currentJSON.NoviPredmet == undefined) {
     return;
   }
@@ -56,12 +55,12 @@ export async function loadSaved(currentJSON) {
   const selectedClassroom = classroomListItems.find(
     (item) => item.textContent == newClassroom
   );
-
   clickAndScroolTo(selectedTeacher);
-  clickAndScroolTo(selectedClassroom);
-
-  const selectedSubject = await retireveSubjectToClick(newSubject);
-  clickAndScroolTo(selectedSubject);
+  if (selectedTeacher?.textContent != nullElement) {
+    const selectedSubject = await retireveSubjectToClick(newSubject);
+    clickAndScroolTo(selectedSubject);
+    clickAndScroolTo(selectedClassroom);
+  }
 
   changeStatusMessage();
   changeCurrentDisplay(false, currentAbsenceText);

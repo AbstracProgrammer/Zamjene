@@ -1,5 +1,6 @@
 import { fetchJSON } from "../../assets/js/searchList.js";
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
+import { nullElement } from "./extractInformation.js";
 import { modal } from "./index.js";
 
 export function changeRemainingNumber(isTeacher, isAddition) {
@@ -38,7 +39,12 @@ function extractAndPrepareSelectedInformation(currentJSON) {
   const selectedClassroom = document.querySelector(
     "#room-list > .element-selected"
   );
-  if (
+  if (selectedTeacher?.textContent == nullElement) {
+    currentJSON.NoviPredmet = currentJSON.Predmet;
+    currentJSON.Zamjena = nullElement;
+    currentJSON.NoviProstor = currentJSON.Prostor;
+    return currentJSON;
+  } else if (
     selectedClassroom === null ||
     selectedSubject === null ||
     selectedTeacher === null
