@@ -65,7 +65,7 @@ export async function sortTeachers(currentClassJSON, currentTeacher) {
 
   for (let i = 0; i < allTeachers.length; i++) {
     const teacher = allTeachers[i];
-    const teacherJSON = filterTeacher(teacher, JSON);
+    let teacherJSON = filterTeacher(teacher, JSON);
 
     //ako bude undefined znaci da tada ne uci
     const isTeacherFree = teacherJSON.find((item) => {
@@ -75,6 +75,7 @@ export async function sortTeachers(currentClassJSON, currentTeacher) {
         item.Zamjena != teacher
       );
     });
+    teacherJSON = teacherJSON.filter((item) => item.Zamjena == undefined);
 
     if (isTeacherFree != undefined) {
       badTeachers.push(teacher);

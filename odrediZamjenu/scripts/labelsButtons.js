@@ -44,9 +44,9 @@ function extractAndPrepareSelectedInformation(currentJSON) {
   ) {
     return false;
   }
-  currentJSON.Predmet = selectedSubject.textContent;
+  currentJSON.NoviPredmet = selectedSubject.textContent;
   currentJSON.Zamjena = selectedTeacher.textContent;
-  currentJSON.Prostor = selectedClassroom.textContent;
+  currentJSON.NoviProstor = selectedClassroom.textContent;
   return currentJSON;
 }
 
