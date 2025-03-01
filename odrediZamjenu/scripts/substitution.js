@@ -44,6 +44,7 @@ function makeListItem(text) {
 
 export async function fillTeachersList(sortedTeachersLists) {
   const teacherListElement = document.querySelector("#teacher-list");
+  const allSubjects = await retrieveAllSubjects();
 
   for (let i = 0; i < sortedTeachersLists[0].length; i++) {
     const bestTeacher = sortedTeachersLists[0][i];
@@ -53,10 +54,9 @@ export async function fillTeachersList(sortedTeachersLists) {
     itemElement.addEventListener("click", async () => {
       markAsSelected(itemElement);
 
-      const allSubjects = await retrieveAllSubjects();
       const bestSubject = currentAbsence.Predmet;
       allSubjects.splice(allSubjects.indexOf(bestSubject), 1);
-      const teacherTeaches = await subjectsTeachersTeachesToStudentClass(
+      const teacherTeaches = subjectsTeachersTeachesToStudentClass(
         await filterJSONByTeacher(itemElement.textContent),
         currentAbsence.Razred
       );
@@ -75,8 +75,7 @@ export async function fillTeachersList(sortedTeachersLists) {
     itemElement.addEventListener("click", async () => {
       markAsSelected(itemElement);
 
-      const allSubjects = await retrieveAllSubjects();
-      const teacherTeaches = await subjectsTeachersTeachesToStudentClass(
+      const teacherTeaches = subjectsTeachersTeachesToStudentClass(
         await filterJSONByTeacher(itemElement.textContent),
         currentAbsence.Razred
       );
@@ -94,7 +93,6 @@ export async function fillTeachersList(sortedTeachersLists) {
     teacherListElement?.appendChild(itemElement);
     itemElement.addEventListener("click", async () => {
       markAsSelected(itemElement);
-      const allSubjects = await retrieveAllSubjects();
       fillSubjectsList([[], [], allSubjects]);
     });
   }

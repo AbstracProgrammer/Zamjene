@@ -165,7 +165,7 @@ export async function retrieveAllSubjects() {
   return subjects.sort(new Intl.Collator("hr").compare);
 }
 
-export async function subjectsTeachersTeachesToStudentClass(
+export function subjectsTeachersTeachesToStudentClass(
   teacherJSON,
   studentClass
 ) {

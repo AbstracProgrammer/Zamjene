@@ -10,6 +10,7 @@ import {
   discard,
   save,
 } from "./labelsButtons.js";
+import { loadSaved } from "./loadSaved.js";
 import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -44,13 +45,12 @@ document
 
 document.querySelector("#discard")?.addEventListener("click", discard);
 
-export let currentAbsence;
+export let currentAbsence, currentAbsenceText;
 let listCurrentAbsenceText,
   listCurrentAbsenceJSON,
   bestTeachersList,
   goodTeachersList,
   badTeachersList,
-  currentAbsenceText,
   currentTeacher,
   currentIndexAbsence,
   currentTeacherTotal;
@@ -76,7 +76,7 @@ async function setUpStartingScreen() {
 
   fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
   fillClassroomList(await sortClassroons(listCurrentAbsenceJSON[0]));
-
+  loadSaved(currentAbsence);
   modal.style.display = "none";
 }
 setUpStartingScreen();
