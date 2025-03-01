@@ -8,7 +8,7 @@ import {
   sortTeachers,
 } from "./extractInformation.js";
 import { changeCurrentDisplay, defineTotal } from "./labelsButtons.js";
-import { loadSaved } from "./loadSaved.js";
+import { displaySavedSubstitutions, loadSaved } from "./loadSaved.js";
 import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
@@ -50,6 +50,7 @@ async function setUpStartingScreen() {
   fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
   fillClassroomList(await sortClassroons(listCurrentAbsenceJSON[0]));
   loadSaved(currentAbsence);
+  displaySavedSubstitutions(listCurrentAbsenceJSON);
 
   previousDayPeriodButton?.classList.add("forbidden-cycle");
   if (listCurrentAbsenceText.length == 1) {
@@ -67,18 +68,18 @@ function previousDayPeriod() {
   if (!didUserSave()) {
     return;
   }
-  const pointer = listCurrentAbsenceText.indexOf(currentAbsenceText);
-  if (pointer == 1) {
+  currentIndexAbsence = listCurrentAbsenceText.indexOf(currentAbsenceText);
+  if (currentIndexAbsence == 1) {
     previousDayPeriodButton?.classList.add("forbidden-cycle");
     previousDayPeriodButton?.removeEventListener("click", previousDayPeriod);
   }
 
-  if (pointer + 1 == listCurrentAbsenceText.length) {
+  if (currentIndexAbsence + 1 == listCurrentAbsenceText.length) {
     nextDayPeriodButton?.classList.remove("forbidden-cycle");
     nextDayPeriodButton?.addEventListener("click", nextDayPeriod);
   }
-  currentAbsenceText = listCurrentAbsenceText[pointer - 1];
-  currentAbsence = listCurrentAbsenceJSON[pointer - 1];
+  currentAbsenceText = listCurrentAbsenceText[currentIndexAbsence - 1];
+  currentAbsence = listCurrentAbsenceJSON[currentIndexAbsence - 1];
   changeCurrentDisplay(false, currentAbsenceText);
   generateNewDayPeriod(currentAbsence, currentTeacher);
 }
@@ -87,19 +88,19 @@ function nextDayPeriod() {
   if (!didUserSave()) {
     return;
   }
-  const pointer = listCurrentAbsenceText.indexOf(currentAbsenceText);
-  if (pointer + 2 == listCurrentAbsenceText.length) {
+  currentIndexAbsence = listCurrentAbsenceText.indexOf(currentAbsenceText);
+  if (currentIndexAbsence + 2 == listCurrentAbsenceText.length) {
     nextDayPeriodButton?.classList.add("forbidden-cycle");
     nextDayPeriodButton?.removeEventListener("click", nextDayPeriod);
   }
 
-  if (pointer == 0) {
+  if (currentIndexAbsence == 0) {
     previousDayPeriodButton?.classList.remove("forbidden-cycle");
     previousDayPeriodButton?.addEventListener("click", previousDayPeriod);
   }
 
-  currentAbsenceText = listCurrentAbsenceText[pointer + 1];
-  currentAbsence = listCurrentAbsenceJSON[pointer + 1];
+  currentAbsenceText = listCurrentAbsenceText[currentIndexAbsence + 1];
+  currentAbsence = listCurrentAbsenceJSON[currentIndexAbsence + 1];
   changeCurrentDisplay(false, currentAbsenceText);
   generateNewDayPeriod(currentAbsence, currentTeacher);
 }

@@ -7,6 +7,19 @@ function clickAndScroolTo(element) {
   element.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+export function displaySavedSubstitutions(listAbsenceJSON) {
+  let savedSubstitutions = 0;
+  for (let i = 0; i < listAbsenceJSON.length; i++) {
+    const absenceJSON = listAbsenceJSON[i];
+    if (!absenceJSON.hasOwnProperty("NoviPredmet")) {
+      continue;
+    }
+    savedSubstitutions++;
+  }
+  document.querySelector("#class-remaining").textContent =
+    savedSubstitutions.toString();
+}
+
 export async function loadSaved(currentJSON) {
   if (currentJSON.NoviPredmet == undefined) {
     return;

@@ -51,6 +51,9 @@ function extractAndPrepareSelectedInformation(currentJSON) {
 }
 
 export async function save(currentJSON) {
+  if (document.querySelector(".save-status")?.classList.contains("saved")) {
+    return;
+  }
   const json = await fetchJSON();
   const configuredJSON = Object.assign({}, currentJSON);
   if (extractAndPrepareSelectedInformation(configuredJSON) === false) {
@@ -77,10 +80,14 @@ export async function save(currentJSON) {
 }
 
 export function discard() {
+  const subjectListElement = document.querySelector("#subject-list");
+  subjectListElement.innerHTML = "";
   const selectedItem = document.querySelectorAll(".element-selected");
   for (let i = 0; i < selectedItem.length; i++) {
     selectedItem[i].classList.remove("element-selected");
   }
-  const subjectListElement = document.querySelector("#subject-list");
-  subjectListElement.innerHTML = "";
+  if (document.querySelector(".save-status")?.classList.contains("saved")) {
+    changeStatusMessage();
+    changeRemainingNumber(false, false);
+  }
 }

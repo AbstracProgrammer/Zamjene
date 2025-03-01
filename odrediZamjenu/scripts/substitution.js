@@ -1,3 +1,4 @@
+import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
 import { filterJSONByTeacher } from "../../raspored/scripts/jsonHelper.js";
 import {
   nullElement,
@@ -5,10 +6,16 @@ import {
   subjectsTeachersTeachesToStudentClass,
 } from "./extractInformation.js";
 import { currentAbsence } from "./index.js";
+import { changeRemainingNumber } from "./labelsButtons.js";
 
 function markAsSelected(element) {
   if (element.classList.contains("element-selected")) {
     return;
+  }
+
+  if (document.querySelector(".save-status")?.classList.contains("saved")) {
+    changeStatusMessage();
+    changeRemainingNumber(false, false);
   }
   clickIfThereIsSelectedItem(element.parentElement);
   hideIfFreeClass(element.textContent);
