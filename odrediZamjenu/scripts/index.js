@@ -35,7 +35,6 @@ let listCurrentAbsenceText,
 async function setUpStartingScreen() {
   [listCurrentAbsenceText, listCurrentAbsenceJSON] =
     await extractSelectedClasses(absentTeachers[0]);
-  console.log(listCurrentAbsenceText, listCurrentAbsenceJSON);
 
   currentAbsence = listCurrentAbsenceJSON[0];
   currentAbsenceText = listCurrentAbsenceText[0];
@@ -44,7 +43,6 @@ async function setUpStartingScreen() {
   currentIndexAbsence = 0;
   currentPeriodsTotal = defineTotal(false, listCurrentAbsenceText);
 
-  console.log(currentAbsence);
   [bestTeachersList, goodTeachersList, badTeachersList] = await sortTeachers(
     currentAbsence,
     absentTeachers[0]
