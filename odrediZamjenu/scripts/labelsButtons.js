@@ -1,5 +1,6 @@
 import { fetchJSON } from "../../assets/js/searchList.js";
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
+import { modal } from "./index.js";
 
 export function changeRemainingNumber(isTeacher, isAddition) {
   const remainingElementID = isTeacher
@@ -54,9 +55,11 @@ export async function save(currentJSON) {
   if (document.querySelector(".save-status")?.classList.contains("saved")) {
     return;
   }
+  modal.style.display = "block";
   const json = await fetchJSON();
   const configuredJSON = Object.assign({}, currentJSON);
   if (extractAndPrepareSelectedInformation(configuredJSON) === false) {
+    modal.style.display = "none";
     alert("Molimo izaberite zamjenu za sve");
     return;
   }
@@ -77,6 +80,7 @@ export async function save(currentJSON) {
 
   changeStatusMessage();
   changeRemainingNumber(false, true);
+  modal.style.display = "none";
 }
 
 export function discard() {

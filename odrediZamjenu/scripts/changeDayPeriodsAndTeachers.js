@@ -26,9 +26,9 @@ export async function generateNewDayPeriod(currentAbsenceJSON, currentTeacher) {
   const [bestTeachersList, goodTeachersList, badTeachersList] =
     await sortTeachers(currentAbsenceJSON, currentTeacher);
 
-  fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
+  await fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
   fillClassroomList(await sortClassroons(currentAbsenceJSON));
   changeStatusMessage();
-  loadSaved(currentAbsenceJSON);
+  await loadSaved(currentAbsenceJSON);
   modal.style.display = "none";
 }

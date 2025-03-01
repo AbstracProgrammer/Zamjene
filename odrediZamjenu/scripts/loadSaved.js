@@ -1,4 +1,5 @@
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
+import { extractSelectedClasses } from "./extractInformation.js";
 import { currentAbsenceText } from "./index.js";
 import { changeCurrentDisplay } from "./labelsButtons.js";
 
@@ -20,7 +21,26 @@ export function displaySavedSubstitutions(listAbsenceJSON) {
     savedSubstitutions.toString();
 }
 
+export let maxSubstitutionsOfTeacher = [];
+export async function displaySavedTeachers(teacherList) {
+  let savedTeachers = 0;
+  for (let i = 0; i < teacherList.length; i++) {
+    const teacher = teacherList[i];
+    const [dayPeriodText, teacherJSON] = await extractSelectedClasses(teacher);
+    maxSubstitutionsOfTeacher.push(teacherJSON.length);
+    const indexOfUnsaved = teacherJSON.filter((item) =>
+      item.hasOwnProperty("NoviPredmet")
+    );
+    if (indexOfUnsaved.length !== teacherJSON.length) {
+      continue;
+    }
+    savedTeachers++;
+  }
+  document.querySelector("#schedule-remaining").textContent =
+    savedTeachers.toString();
+}
 export async function loadSaved(currentJSON) {
+  console.log(currentJSON);
   if (currentJSON.NoviPredmet == undefined) {
     return;
   }

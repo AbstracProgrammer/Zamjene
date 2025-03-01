@@ -8,24 +8,27 @@ import {
   sortTeachers,
 } from "./extractInformation.js";
 import { changeCurrentDisplay, defineTotal } from "./labelsButtons.js";
-import { displaySavedSubstitutions, loadSaved } from "./loadSaved.js";
+import {
+  displaySavedSubstitutions,
+  displaySavedTeachers,
+  loadSaved,
+} from "./loadSaved.js";
 import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
-const absentTeachers = JSON.parse(params.get("absent"));
+export const absentTeachers = JSON.parse(params.get("absent"));
 export const modal = document.querySelector(".modal-window");
 modal.style.display = "block";
 
 export const teacherTotal = defineTotal(true, absentTeachers);
 
-export let currentAbsence, currentAbsenceText;
+export let currentAbsence, currentAbsenceText, currentTeacherIndex;
 let listCurrentAbsenceText,
   listCurrentAbsenceJSON,
   bestTeachersList,
   goodTeachersList,
   badTeachersList,
   currentTeacher,
-  currentTeacherIndex,
   currentIndexAbsence,
   currentPeriodsTotal;
 
@@ -49,9 +52,10 @@ async function setUpStartingScreen() {
   changeCurrentDisplay(true, currentTeacher);
   changeCurrentDisplay(false, currentAbsenceText);
 
-  fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
+  await displaySavedTeachers(absentTeachers);
+  await fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
   fillClassroomList(await sortClassroons(listCurrentAbsenceJSON[0]));
-  loadSaved(currentAbsence);
+  await loadSaved(currentAbsence);
   displaySavedSubstitutions(listCurrentAbsenceJSON);
 
   previousDayPeriodButton?.classList.add("forbidden-cycle");
@@ -72,7 +76,7 @@ async function setUpStartingScreen() {
 const previousDayPeriodButton = document.querySelector("#left-class");
 const nextDayPeriodButton = document.querySelector("#right-class");
 
-function previousDayPeriod() {
+async function previousDayPeriod() {
   if (!didUserSave()) {
     return;
   }
@@ -92,10 +96,13 @@ function previousDayPeriod() {
   generateNewDayPeriod(currentAbsence, currentTeacher);
 }
 
-function nextDayPeriod() {
+async function nextDayPeriod() {
   if (!didUserSave()) {
     return;
   }
+  //na njemu samo jer on je uvijek prvi
+  [listCurrentAbsenceText, listCurrentAbsenceJSON] =
+    await extractSelectedClasses(currentTeacher);
   currentIndexAbsence = listCurrentAbsenceText.indexOf(currentAbsenceText);
   if (currentIndexAbsence + 2 == listCurrentAbsenceText.length) {
     nextDayPeriodButton?.classList.add("forbidden-cycle");
@@ -116,7 +123,7 @@ function nextDayPeriod() {
 const previousTeacherButton = document.querySelector("#left-teacher");
 const nextTeacherButton = document.querySelector("#right-teacher");
 
-async function updateInformationWhenChaningTeacher() {
+async function updateInformationWhenChangingTeacher() {
   currentTeacher = absentTeachers[currentTeacherIndex];
   [listCurrentAbsenceText, listCurrentAbsenceJSON] =
     await extractSelectedClasses(currentTeacher);
@@ -129,10 +136,27 @@ async function updateInformationWhenChaningTeacher() {
   generateNewDayPeriod(currentAbsence, currentTeacher);
   currentPeriodsTotal = defineTotal(false, listCurrentAbsenceText);
   displaySavedSubstitutions(listCurrentAbsenceJSON);
+
+  previousDayPeriodButton?.classList.add("forbidden-cycle");
+  previousDayPeriodButton?.removeEventListener("click", previousDayPeriod);
+  if (listCurrentAbsenceText.length == 1) {
+    nextDayPeriodButton?.classList.add("forbidden-cycle");
+    nextDayPeriodButton?.removeEventListener("click", nextDayPeriod);
+  } else {
+    //nije moguce provjeriti ako je prije bio maknut
+    nextDayPeriodButton?.removeEventListener("click", nextDayPeriod);
+    nextDayPeriodButton?.classList.remove("forbidden-cycle");
+    nextDayPeriodButton?.addEventListener("click", nextDayPeriod);
+  }
 }
 
+const reaminingSchedules = document.querySelector("#class-remaining");
+
 async function previousTeacher() {
-  //funkcija ako nije spremljeno
+  if (currentPeriodsTotal != reaminingSchedules.textContent) {
+    alert("Molimo spremite sve zamjene prije prebacivanja profesora");
+    return;
+  }
   if (currentTeacherIndex == 1) {
     previousTeacherButton?.classList.add("forbidden-cycle");
     previousTeacherButton?.removeEventListener("click", previousTeacher);
@@ -143,12 +167,14 @@ async function previousTeacher() {
     nextTeacherButton?.addEventListener("click", nextTeacher);
   }
   currentTeacherIndex--;
-  await updateInformationWhenChaningTeacher();
-  console.log(listCurrentAbsenceText, listCurrentAbsenceJSON);
+  await updateInformationWhenChangingTeacher();
 }
 
 async function nextTeacher() {
-  //funkcija ako nije spremljeno
+  if (currentPeriodsTotal != reaminingSchedules.textContent) {
+    alert("Molimo spremite sve zamjene prije prebacivanja profesora");
+    return;
+  }
   if (currentTeacherIndex + 2 == absentTeachers.length) {
     nextTeacherButton?.classList.add("forbidden-cycle");
     nextTeacherButton?.removeEventListener("click", nextTeacher);
@@ -158,7 +184,6 @@ async function nextTeacher() {
     previousTeacherButton?.addEventListener("click", previousTeacher);
   }
   currentTeacherIndex++;
-  await updateInformationWhenChaningTeacher();
-  console.log("nakon", listCurrentAbsenceText, listCurrentAbsenceJSON);
+  await updateInformationWhenChangingTeacher();
 }
 setUpStartingScreen();
