@@ -1,49 +1,22 @@
-import { displaySearchResults } from "../../assets/js/searchList.js";
+import {
+  didUserSave,
+  generateNewDayPeriod,
+} from "./changeDayPeriodsAndTeachers.js";
 import {
   extractSelectedClasses,
   sortClassroons,
   sortTeachers,
 } from "./extractInformation.js";
-import {
-  changeCurrentDisplay,
-  defineTotal,
-  discard,
-  save,
-} from "./labelsButtons.js";
+import { changeCurrentDisplay, defineTotal } from "./labelsButtons.js";
 import { loadSaved } from "./loadSaved.js";
 import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
-const modal = document.querySelector(".modal-window");
+export const modal = document.querySelector(".modal-window");
 modal.style.display = "block";
 
 export const teacherTotal = defineTotal(true, absentTeachers);
-
-document.querySelector("#teacher-input").addEventListener("input", (e) => {
-  displaySearchResults(
-    e.target.value,
-    document.querySelectorAll("#teacher-list > *")
-  );
-});
-document.querySelector("#subject-input").addEventListener("input", (e) => {
-  displaySearchResults(
-    e.target.value,
-    document.querySelectorAll("#subject-list > *")
-  );
-});
-document.querySelector("#room-input").addEventListener("input", (e) => {
-  displaySearchResults(
-    e.target.value,
-    document.querySelectorAll("#room-list > *")
-  );
-});
-
-document
-  .querySelector("#save")
-  ?.addEventListener("click", async () => await save(currentAbsence));
-
-document.querySelector("#discard")?.addEventListener("click", discard);
 
 export let currentAbsence, currentAbsenceText;
 let listCurrentAbsenceText,
@@ -77,6 +50,58 @@ async function setUpStartingScreen() {
   fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
   fillClassroomList(await sortClassroons(listCurrentAbsenceJSON[0]));
   loadSaved(currentAbsence);
+
+  previousDayPeriodButton?.classList.add("forbidden-cycle");
+  if (listCurrentAbsenceText.length == 1) {
+    nextDayPeriodButton?.classList.add("forbidden-cycle");
+  } else {
+    nextDayPeriodButton?.addEventListener("click", nextDayPeriod);
+  }
   modal.style.display = "none";
 }
+
+const previousDayPeriodButton = document.querySelector("#left-class");
+const nextDayPeriodButton = document.querySelector("#right-class");
+
+function previousDayPeriod() {
+  if (!didUserSave()) {
+    return;
+  }
+  const pointer = listCurrentAbsenceText.indexOf(currentAbsenceText);
+  if (pointer == 1) {
+    previousDayPeriodButton?.classList.add("forbidden-cycle");
+    previousDayPeriodButton?.removeEventListener("click", previousDayPeriod);
+  }
+
+  if (pointer + 1 == listCurrentAbsenceText.length) {
+    nextDayPeriodButton?.classList.remove("forbidden-cycle");
+    nextDayPeriodButton?.addEventListener("click", nextDayPeriod);
+  }
+  currentAbsenceText = listCurrentAbsenceText[pointer - 1];
+  currentAbsence = listCurrentAbsenceJSON[pointer - 1];
+  changeCurrentDisplay(false, currentAbsenceText);
+  generateNewDayPeriod(currentAbsence, currentTeacher);
+}
+
+function nextDayPeriod() {
+  if (!didUserSave()) {
+    return;
+  }
+  const pointer = listCurrentAbsenceText.indexOf(currentAbsenceText);
+  if (pointer + 2 == listCurrentAbsenceText.length) {
+    nextDayPeriodButton?.classList.add("forbidden-cycle");
+    nextDayPeriodButton?.removeEventListener("click", nextDayPeriod);
+  }
+
+  if (pointer == 0) {
+    previousDayPeriodButton?.classList.remove("forbidden-cycle");
+    previousDayPeriodButton?.addEventListener("click", previousDayPeriod);
+  }
+
+  currentAbsenceText = listCurrentAbsenceText[pointer + 1];
+  currentAbsence = listCurrentAbsenceJSON[pointer + 1];
+  changeCurrentDisplay(false, currentAbsenceText);
+  generateNewDayPeriod(currentAbsence, currentTeacher);
+}
+
 setUpStartingScreen();

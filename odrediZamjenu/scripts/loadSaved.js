@@ -1,9 +1,6 @@
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
 import { currentAbsenceText } from "./index.js";
-import {
-  changeCurrentDisplay,
-  changeRemainingNumber,
-} from "./labelsButtons.js";
+import { changeCurrentDisplay } from "./labelsButtons.js";
 
 function clickAndScroolTo(element) {
   element.click();
@@ -35,7 +32,6 @@ export async function loadSaved(currentJSON) {
 
   changeStatusMessage();
   changeCurrentDisplay(false, currentAbsenceText);
-  changeRemainingNumber(false, true);
 }
 
 function retireveSubjectToClick(subject) {
