@@ -1,6 +1,11 @@
 import { displaySearchResults } from "../../assets/js/searchList.js";
 import { currentAbsence, currentTeacherIndex } from "./index.js";
-import { changeRemainingNumber, discard, save } from "./labelsButtons.js";
+import {
+  changeRemainingNumber,
+  discard,
+  save,
+  showSchedule,
+} from "./labelsButtons.js";
 import { maxSubstitutionsOfTeacher } from "./loadSaved.js";
 
 document.querySelector("#teacher-input").addEventListener("input", (e) => {
@@ -27,6 +32,7 @@ document
   ?.addEventListener("click", async () => await save(currentAbsence));
 
 document.querySelector("#discard")?.addEventListener("click", discard);
+document.querySelector("#continue")?.addEventListener("click", showSchedule);
 
 const remainingSubstitutionElement = document.querySelector("#class-remaining");
 

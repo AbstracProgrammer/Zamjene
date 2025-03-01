@@ -1,7 +1,7 @@
 import { fetchJSON } from "../../assets/js/searchList.js";
 import { changeStatusMessage } from "../../raspored/scripts/buttonsLabels.js";
 import { nullElement } from "./extractInformation.js";
-import { modal } from "./index.js";
+import { modal, teacherTotal } from "./index.js";
 
 export function changeRemainingNumber(isTeacher, isAddition) {
   const remainingElementID = isTeacher
@@ -100,4 +100,17 @@ export function discard() {
     changeStatusMessage();
     changeRemainingNumber(false, false);
   }
+}
+
+export function showSchedule() {
+  const remainingTeachersText = document.querySelector(
+    "#schedule-remaining"
+  )?.textContent;
+  if (teacherTotal == remainingTeachersText) {
+    const url =
+      window.location.protocol + "//" + window.location.host + "/raspored.json";
+    window.open(url, "_self");
+    return;
+  }
+  alert("Molimo spremite sve profesore/ice");
 }

@@ -30,5 +30,8 @@ export async function generateNewDayPeriod(currentAbsenceJSON, currentTeacher) {
   fillClassroomList(await sortClassroons(currentAbsenceJSON));
   changeStatusMessage();
   await loadSaved(currentAbsenceJSON);
+  document.querySelector("#teacher-input").value = "";
+  document.querySelector("#subject-input").value = "";
+  document.querySelector("#room-input").value = "";
   modal.style.display = "none";
 }

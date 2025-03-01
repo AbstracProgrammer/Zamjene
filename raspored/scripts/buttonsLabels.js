@@ -115,8 +115,10 @@ export function nextStep() {
   if (totalNumber == remainingNumber) {
     const queryString = window.location.href.split("?")[1];
     const url =
-      window.location.href.split("/")[0] +
-      "/../odrediZamjenu/odredi-zamjenu.html?" +
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      "/odrediZamjenu/odredi-zamjenu.html?" +
       queryString;
     window.open(url, "_self");
     return;
