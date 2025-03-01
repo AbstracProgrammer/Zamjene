@@ -5,6 +5,11 @@ import {
   changeRemainingNumber,
 } from "./labelsButtons.js";
 
+function clickAndScroolTo(element) {
+  element.click();
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
 export async function loadSaved(currentJSON) {
   if (currentJSON.NoviPredmet == undefined) {
     return;
@@ -14,11 +19,19 @@ export async function loadSaved(currentJSON) {
   const newSubject = currentJSON.NoviPredmet;
 
   const teacherListItems = [...document.querySelectorAll("#teacher-list > *")];
-  teacherListItems.find((item) => item.textContent == substitute).click();
+  const selectedTeacher = teacherListItems.find(
+    (item) => item.textContent == substitute
+  );
   const classroomListItems = [...document.querySelectorAll("#room-list > * ")];
-  classroomListItems.find((item) => item.textContent == newClassroom).click();
+  const selectedClassroom = classroomListItems.find(
+    (item) => item.textContent == newClassroom
+  );
 
-  (await retireveSubjectToClick(newSubject)).click();
+  clickAndScroolTo(selectedTeacher);
+  clickAndScroolTo(selectedClassroom);
+
+  const selectedSubject = await retireveSubjectToClick(newSubject);
+  clickAndScroolTo(selectedSubject);
 
   changeStatusMessage();
   changeCurrentDisplay(false, currentAbsenceText);
