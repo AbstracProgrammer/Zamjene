@@ -4,12 +4,20 @@ import {
   sortClassroons,
   sortTeachers,
 } from "./extractInformation.js";
+import {
+  changeCurrentDisplay,
+  defineTotal,
+  discard,
+  save,
+} from "./labelsButtons.js";
 import { fillClassroomList, fillTeachersList } from "./substitution.js";
 
 const params = new URLSearchParams(window.location.search);
 const absentTeachers = JSON.parse(params.get("absent"));
 const modal = document.querySelector(".modal-window");
 modal.style.display = "block";
+
+export const teacherTotal = defineTotal(true, absentTeachers);
 
 document.querySelector("#teacher-input").addEventListener("input", (e) => {
   displaySearchResults(
@@ -30,32 +38,44 @@ document.querySelector("#room-input").addEventListener("input", (e) => {
   );
 });
 
-export let currentTeachersAbsence,
-  currentTeachersAbsenceJSON,
+document
+  .querySelector("#save")
+  ?.addEventListener("click", async () => await save(currentAbsence));
+
+document.querySelector("#discard")?.addEventListener("click", discard);
+
+export let currentAbsence;
+let listCurrentAbsenceText,
+  listCurrentAbsenceJSON,
   bestTeachersList,
   goodTeachersList,
   badTeachersList,
-  currentAbsence,
+  currentAbsenceText,
   currentTeacher,
-  currentIndexAbsence;
+  currentIndexAbsence,
+  currentTeacherTotal;
 
 async function setUpStartingScreen() {
-  [currentTeachersAbsence, currentTeachersAbsenceJSON] =
+  [listCurrentAbsenceText, listCurrentAbsenceJSON] =
     await extractSelectedClasses(absentTeachers[0]);
-  console.log(currentTeachersAbsence, currentTeachersAbsenceJSON);
-  //a i b su dan i sat
-  [bestTeachersList, goodTeachersList, badTeachersList] = await sortTeachers(
-    currentTeachersAbsenceJSON[0],
-    absentTeachers[0]
-  );
-  currentAbsence = currentTeachersAbsenceJSON[0];
+  console.log(listCurrentAbsenceText, listCurrentAbsenceJSON);
+
+  currentAbsence = listCurrentAbsenceJSON[0];
+  currentAbsenceText = listCurrentAbsenceText[0];
   currentTeacher = absentTeachers[0];
   currentIndexAbsence = 0;
+  currentTeacherTotal = defineTotal(false, listCurrentAbsenceText);
 
-  console.log(bestTeachersList, goodTeachersList, badTeachersList);
-  //c su ostali, d su losi
+  console.log(currentAbsence);
+  [bestTeachersList, goodTeachersList, badTeachersList] = await sortTeachers(
+    currentAbsence,
+    absentTeachers[0]
+  );
+  changeCurrentDisplay(true, currentTeacher);
+  changeCurrentDisplay(false, currentAbsenceText);
+
   fillTeachersList([bestTeachersList, goodTeachersList, badTeachersList]);
-  fillClassroomList(await sortClassroons(currentTeachersAbsenceJSON[0]));
+  fillClassroomList(await sortClassroons(listCurrentAbsenceJSON[0]));
 
   modal.style.display = "none";
 }

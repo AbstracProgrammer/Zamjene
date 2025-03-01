@@ -45,9 +45,9 @@ function retrieveAllTeacherNames(currentTeacher, json) {
 
   return teachers.sort(new Intl.Collator("hr").compare);
 }
-function filterTeacher(teachers, test) {
-  const filteredJSON = test.filter((json) =>
-    filterHelper(json.Prof, json.OrigProf, teachers)
+function filterTeacher(teachers, allJSON) {
+  const filteredJSON = allJSON.filter((json) =>
+    filterHelper(json.Prof, json.Zamjena, teachers)
   );
   return filteredJSON;
 }
@@ -70,7 +70,9 @@ export async function sortTeachers(currentClassJSON, currentTeacher) {
     //ako bude undefined znaci da tada ne uci
     const isTeacherFree = teacherJSON.find((item) => {
       return (
-        item.Sat == currentClassJSON.Sat && item.Dan == currentClassJSON.Dan
+        item.Sat == currentClassJSON.Sat &&
+        item.Dan == currentClassJSON.Dan &&
+        item.Zamjena != teacher
       );
     });
 
