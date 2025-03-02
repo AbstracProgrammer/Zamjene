@@ -6,8 +6,8 @@ import { filterJSONByTeacher } from "../../raspored/scripts/jsonHelper.js";
  *
  * Ali to opisuje koliko je nešto dobro, npr.
  * Najbolji profesor bi bio stručna zamjena
- * U redu profesor bi bio onaj koje je u nastavničkom vijeću
- * Loš bi bio onaj koji im nije u nastavničkom vijeću ili je tada zauzet
+ * U redu profesor bi bio onaj koje je u razrednom vijeću
+ * Loš bi bio onaj koji im nije u razrednom vijeću ili je tada zauzet
  */
 
 export const nullElement = "//";
